@@ -11,19 +11,19 @@ const Features = () => {
   const features = [
     {
       title: 'Expert-Led Courses',
-      description: 'Learn from certified mindfulness teachers and cognitive therapists with years of practical experience.',
+      description: 'Learn from experienced engineers, product leaders, and industry practitioners who teach what they use every day.',
       icon: <MenuBookIcon fontSize="large" />,
       color: '#6366f1'
     },
     {
       title: 'Global Community',
-      description: 'Join a supportive network of thousands of students from around the world sharing their growth journeys.',
+      description: 'Join a growing community of learners building projects, sharing ideas, and helping each other level up.',
       icon: <PeopleIcon fontSize="large" />,
       color: '#06b6d4'
     },
     {
       title: 'Certified Learning',
-      description: 'Earn industry-recognized certificates upon completion to showcase your commitment to personal growth.',
+      description: 'Earn completion certificates that help you showcase new technical skills to recruiters, teams, and clients.',
       icon: <CertificateIcon fontSize="large" />,
       color: '#f43f5e'
     },
@@ -43,7 +43,7 @@ const Features = () => {
             Elevate Your Learning Experience
           </Typography>
           <Typography variant="h6" color="text.secondary" sx={{ maxWidth: '700px', mx: 'auto' }}>
-            We provide the tools and guidance you need to master mindfulness and cognitive skills in a structured, engaging environment.
+            We provide the structure, tools, and guidance you need to learn in-demand skills in a clear, modern, project-friendly environment.
           </Typography>
         </Box>
         

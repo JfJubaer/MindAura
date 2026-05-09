@@ -64,8 +64,8 @@ const InstructorsPage = () => {
             color="text.secondary"
             sx={{ maxWidth: 700, mx: "auto" }}
           >
-            Learn from industry leaders, world-class researchers, and
-            passionate educators dedicated to your growth.
+            Learn from engineers, designers, founders, and experienced mentors
+            who teach with a practical industry mindset.
           </Typography>
         </Box>
 
@@ -186,7 +186,7 @@ const InstructorsPage = () => {
                         }}
                       >
                         {instructor.bio ||
-                          "Dedicated educator focused on mental wellbeing and personal development."}
+                          "Dedicated instructor focused on practical technical skills and career-ready learning."}
                       </Typography>
 
                       <Divider sx={{ mb: 3 }} />

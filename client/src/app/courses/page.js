@@ -42,11 +42,12 @@ const CoursesPage = () => {
 
   const categories = [
     "All",
-    "Mental Health",
-    "Personal Development",
-    "Meditation",
-    "Psychology",
-    "Yoga",
+    "Web Development",
+    "Mobile Development",
+    "UI/UX Design",
+    "Data Science",
+    "Artificial Intelligence",
+    "Cybersecurity",
     "Other",
   ];
 
@@ -125,8 +126,8 @@ const CoursesPage = () => {
             color="text.secondary"
             sx={{ maxWidth: 600, mx: "auto" }}
           >
-            Discover our wide range of professional mental health and personal
-            development courses.
+            Discover hands-on courses in software, design, data, AI, and other
+            modern professional skills.
           </Typography>
         </Box>
 

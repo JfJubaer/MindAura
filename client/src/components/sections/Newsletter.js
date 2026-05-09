@@ -36,7 +36,7 @@ const Newsletter = () => {
             Join the Wisdora Community
           </Typography>
           <Typography variant="h6" sx={{ mb: { xs: 4, md: 6 }, opacity: 0.9, maxWidth: '600px', mx: 'auto', fontSize: { xs: "1rem", md: "1.25rem" } }}>
-            Subscribe to our newsletter for weekly mindfulness tips, course discounts, and expert insights.
+            Subscribe to get new course launches, learning resources, technology insights, and occasional discounts.
           </Typography>
 
           <Stack 

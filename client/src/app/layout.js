@@ -19,7 +19,7 @@ const orbitron = Orbitron({
 
 export const metadata = {
   title: "Wisdora",
-  description: "Master your mind with Wisdora",
+  description: "Build practical skills with Wisdora",
   icons: {
     icon: [
       { url: "/favicon.ico", type: "image/x-icon" },

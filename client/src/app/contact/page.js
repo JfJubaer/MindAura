@@ -15,7 +15,7 @@ export default function ContactPage() {
           <Grid size={{ xs: 12, md: 5 }}>
             <Typography variant="h2" sx={{ fontWeight: 800, mb: 3, fontSize: { xs: "2rem", md: "3rem" } }}>Get in Touch</Typography>
             <Typography variant="h6" color="text.secondary" sx={{ mb: { xs: 4, md: 6 }, fontSize: { xs: "1rem", md: "1.25rem" } }}>
-              Have questions about our courses or need assistance with your mindfulness journey? We&apos;re here to help.
+              Have questions about a course, your account, or learning on Wisdora? We&apos;re here to help.
             </Typography>
             
             <Stack spacing={4}>
@@ -25,7 +25,7 @@ export default function ContactPage() {
                 </Box>
                 <Box>
                   <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>Email Us</Typography>
-                  <Typography variant="body2" color="text.secondary">support@mindaura.com</Typography>
+                  <Typography variant="body2" color="text.secondary">support@wisdora.com</Typography>
                 </Box>
               </Stack>
 
@@ -45,7 +45,7 @@ export default function ContactPage() {
                 </Box>
                 <Box>
                   <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>Visit Us</Typography>
-                  <Typography variant="body2" color="text.secondary">123 Mindfulness Way, San Francisco, CA</Typography>
+                  <Typography variant="body2" color="text.secondary">Banani, Dhaka, Bangladesh</Typography>
                 </Box>
               </Stack>
             </Stack>

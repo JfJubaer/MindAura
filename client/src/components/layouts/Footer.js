@@ -61,9 +61,8 @@ const Footer = () => {
               color="text.secondary"
               sx={{ mb: 3, maxWidth: 300, lineHeight: 1.8 }}
             >
-              Empowering your mind through specialised learning. The
-              world&apos;s leading platform for mental wellbeing and mindfulness
-              education.
+              Learn practical skills from beginner to advanced level with
+              hands-on courses in technology, design, business, and more.
             </Typography>
             <Stack direction="row" spacing={1}>
               <IconButton size="small" color="primary">

@@ -28,7 +28,7 @@ export default function LoginPage() {
             Welcome Back
           </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-            Continue your journey to mindfulness and growth.
+            Continue learning with your saved courses, progress, and projects.
           </Typography>
           
           <LoginForm />

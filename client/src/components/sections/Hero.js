@@ -12,25 +12,25 @@ import Link from "next/link";
 const Hero = () => {
   const slides = [
     {
-      title: "Master Your Mind with Expert Guidance",
+      title: "Build Real Skills with Expert Guidance",
       subtitle:
-        "Join over 50,000 students learning mindfulness, cognitive behavior, and emotional intelligence from world-class instructors.",
+        "Join thousands of learners studying web development, data, design, AI, and other modern career skills from expert instructors.",
       cta: "Explore Courses",
       image:
         "https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=2070&auto=format&fit=crop",
     },
     {
-      title: "Elevate Your Teaching Career",
+      title: "Launch Your Next Learning Journey",
       subtitle:
-        "Become a certified Wisdora instructor and share your knowledge with a global community of eager learners.",
-      cta: "Start Teaching",
+        "Discover practical courses, guided learning paths, and project-based lessons designed to help you learn faster and apply what you study.",
+      cta: "Start Learning",
       image:
         "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=2040&auto=format&fit=crop",
     },
     {
-      title: "Transformative Learning Anywhere",
+      title: "Technology Learning Anywhere",
       subtitle:
-        "Access our entire library of specialized mental wellbeing courses from any device, anytime.",
+        "Access our growing library of technology and professional courses from any device, whenever it fits your schedule.",
       cta: "Join Now",
       image:
         "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=2070&auto=format&fit=crop",
@@ -121,7 +121,7 @@ const Hero = () => {
                         fullWidth
                         sx={{ fontWeight: 700 }}
                       >
-                        Subscribe to our Newsletter
+                        Create Your Account
                       </Button>
                     </Link>
                   </Stack>

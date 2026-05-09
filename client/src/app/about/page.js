@@ -45,25 +45,25 @@ const stats = [
 
 const team = [
   {
-    name: "Sarah Johnson",
+    name: "Nabila Akter",
     role: "Founder & CEO",
     image:
       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1974&auto=format&fit=crop",
-    bio: "Visionary leader with 15+ years in psychology and education.",
+    bio: "Product-minded founder focused on making high-quality digital learning more accessible across emerging markets.",
   },
   {
-    name: "Dr. Michael Chen",
+    name: "Arafat Hossain",
     role: "Head of Curriculum",
     image:
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop",
-    bio: "Specialist in Cognitive Behavioral Therapy and interactive learning.",
+    bio: "Leads course quality, learning design, and hands-on curriculum development for fast-moving technical subjects.",
   },
   {
-    name: "Emma Williams",
+    name: "Sanjida Karim",
     role: "Student Success Lead",
     image:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop",
-    bio: "Dedicated to providing the best learning experience for our global community.",
+    bio: "Works closely with learners to improve onboarding, support, and the overall student experience on the platform.",
   },
 ];
 
@@ -101,10 +101,15 @@ const AboutPage = () => {
           </Typography>
           <Typography
             variant="h5"
-            sx={{ fontWeight: 400, opacity: 0.9, lineHeight: 1.6, fontSize: { xs: "1rem", md: "1.5rem" } }}
+            sx={{
+              fontWeight: 400,
+              opacity: 0.9,
+              lineHeight: 1.6,
+              fontSize: { xs: "1rem", md: "1.5rem" },
+            }}
           >
-            Empowering individuals through mindful learning and expert-led
-            psychology education.
+            Empowering learners through practical, expert-led education in
+            technology and modern professional skills.
           </Typography>
         </Container>
       </Box>
@@ -142,7 +147,10 @@ const AboutPage = () => {
                   </Box>
                   <Typography
                     variant="h4"
-                    sx={{ fontWeight: 800, fontSize: { xs: "1.5rem", md: "2.125rem" } }}
+                    sx={{
+                      fontWeight: 800,
+                      fontSize: { xs: "1.5rem", md: "2.125rem" },
+                    }}
                   >
                     {stat.value}
                   </Typography>
@@ -180,7 +188,12 @@ const AboutPage = () => {
             </Typography>
             <Typography
               variant="h3"
-              sx={{ fontWeight: 800, mt: 1, mb: 3, fontSize: { xs: "2rem", md: "3rem" } }}
+              sx={{
+                fontWeight: 800,
+                mt: 1,
+                mb: 3,
+                fontSize: { xs: "2rem", md: "3rem" },
+              }}
             >
               Transforming Lives Through Education
             </Typography>
@@ -190,9 +203,9 @@ const AboutPage = () => {
               paragraph
               sx={{ fontSize: "1.1rem", lineHeight: 1.8 }}
             >
-              Wisdora started with a simple belief: that high-quality
-              psychological education and mindfulness practices should be
-              accessible to everyone, everywhere.
+              Wisdora started with a simple belief: that high-quality digital
+              education should be accessible to everyone, whether they want to
+              learn software development, design, data, or business.
             </Typography>
             <Typography
               variant="body1"
@@ -202,8 +215,8 @@ const AboutPage = () => {
             >
               Over the past few years, we&apos;ve grown from a small group of
               passionate educators to a global platform, helping thousands of
-              students navigate the complexities of the human mind and achieve
-              their personal growth goals.
+              students build practical skills, complete real projects, and move
+              closer to their academic and career goals.
             </Typography>
             <Stack
               direction={{ xs: "column", sm: "row" }}
@@ -213,14 +226,22 @@ const AboutPage = () => {
               <Button
                 variant="contained"
                 size="large"
-                sx={{ borderRadius: 2, px: 4, width: { xs: "100%", sm: "auto" } }}
+                sx={{
+                  borderRadius: 2,
+                  px: 4,
+                  width: { xs: "100%", sm: "auto" },
+                }}
               >
                 Explore Courses
               </Button>
               <Button
                 variant="outlined"
                 size="large"
-                sx={{ borderRadius: 2, px: 4, width: { xs: "100%", sm: "auto" } }}
+                sx={{
+                  borderRadius: 2,
+                  px: 4,
+                  width: { xs: "100%", sm: "auto" },
+                }}
               >
                 Contact Us
               </Button>
@@ -265,7 +286,11 @@ const AboutPage = () => {
           <Typography
             variant="h3"
             textAlign="center"
-            sx={{ fontWeight: 800, mb: { xs: 5, md: 8 }, fontSize: { xs: "2rem", md: "3rem" } }}
+            sx={{
+              fontWeight: 800,
+              mb: { xs: 5, md: 8 },
+              fontSize: { xs: "2rem", md: "3rem" },
+            }}
           >
             Our Core Values
           </Typography>
@@ -338,7 +363,11 @@ const AboutPage = () => {
         >
           <Typography
             variant="h3"
-            sx={{ fontWeight: 800, mb: 2, fontSize: { xs: "2rem", md: "3rem" } }}
+            sx={{
+              fontWeight: 800,
+              mb: 2,
+              fontSize: { xs: "2rem", md: "3rem" },
+            }}
           >
             Meet the Team
           </Typography>
@@ -346,7 +375,7 @@ const AboutPage = () => {
             variant="h6"
             color="text.secondary"
           >
-            The passionate minds behind Wisdora.
+            The people building Wisdora for the next generation of learners.
           </Typography>
         </Box>
         <Grid
@@ -414,7 +443,11 @@ const AboutPage = () => {
         <Container maxWidth="md">
           <Typography
             variant="h3"
-            sx={{ fontWeight: 800, mb: 3, fontSize: { xs: "2rem", md: "3rem" } }}
+            sx={{
+              fontWeight: 800,
+              mb: 3,
+              fontSize: { xs: "2rem", md: "3rem" },
+            }}
           >
             Ready to Start Your Journey?
           </Typography>

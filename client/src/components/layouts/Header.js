@@ -29,6 +29,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ThemeModeToggle from "@/components/layouts/ThemeModeToggle";
+import Image from "next/image";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -240,6 +241,12 @@ const Header = () => {
       >
         <Container maxWidth="lg">
           <Toolbar disableGutters>
+            <Image
+              src="/wisdora.png"
+              alt="Wisdora Logo"
+              width={40}
+              height={40}
+            />
             <Typography
               variant="h5"
               noWrap

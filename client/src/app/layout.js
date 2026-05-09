@@ -21,7 +21,12 @@ export const metadata = {
   title: "Wisdora",
   description: "Master your mind with Wisdora",
   icons: {
-    icon: "/favicon.png",
+    icon: [
+      { url: "/favicon.ico", type: "image/x-icon" },
+      { url: "/wisdora.png", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/wisdora.png",
   },
 };
 

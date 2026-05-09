@@ -37,6 +37,11 @@ const userSchema = new Schema(
       type: String,
       default: '',
     },
+    
+    bio: {
+      type: String,
+      default: '',
+    },
 
     registered_at: {
       type: Date,

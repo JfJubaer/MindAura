@@ -76,9 +76,58 @@ const logout = catchAsync(async (req, res, next) => {
   });
 });
 
+const updateMe = catchAsync(async (req, res, next) => {
+  // 1) Create error if user POSTs password data
+  if (req.body.password) {
+    return next(new AppError('This route is not for password updates.', 400));
+  }
+
+  // 2) Filtered out unwanted fields names that are not allowed to be updated
+  const filteredBody = {};
+  const allowedFields = ['name', 'email', 'phone', 'profilePic', 'bio'];
+  Object.keys(req.body).forEach((el) => {
+    if (allowedFields.includes(el)) filteredBody[el] = req.body[el];
+  });
+
+  // 3) Update user document
+  const updatedUser = await UserModel.findByIdAndUpdate(req.user.id, filteredBody, {
+    new: true,
+    runValidators: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    body: { user: updatedUser },
+  });
+});
+
+const updatePassword = catchAsync(async (req, res, next) => {
+  // 1) Get user from collection
+  const user = await UserModel.findById(req.user.id).select('+password');
+
+  // 2) Check if posted current password is correct
+  const { currentPassword, newPassword } = req.body;
+  if (!currentPassword || !newPassword) {
+    return next(new AppError('Please provide current and new password', 400));
+  }
+
+  if (!(await bcrypt.compare(currentPassword, user.password))) {
+    return next(new AppError('Your current password is wrong', 401));
+  }
+
+  // 3) If so, update password
+  user.password = newPassword;
+  await user.save();
+
+  // 4) Log user in, send JWT
+  sendToken(user.role, user, 200, res);
+});
+
 module.exports = {
   signUp,
   login,
   logout,
   getSingleUser,
+  updateMe,
+  updatePassword,
 };

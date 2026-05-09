@@ -20,18 +20,22 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '@/redux/features/authSlice';
 import { Controller } from "react-hook-form";
 import PhoneInputField from "./inputs/PhoneInputField";
+import ImageUploadInput from "./inputs/ImageUploadInput";
+import axiosInstance from "@/lib/axios/axiosInstance";
 
 const profileSchema = z.object({
   name: z.string().min(2, 'Name is required'),
   email: z.string().email('Invalid email address'),
   phone: z.string().min(6, 'Phone number is too short'),
   countryCode: z.string(),
+  profilePic: z.string().optional(),
   bio: z.string().optional(),
 });
 
 const ProfileUpdateForm = () => {
   const user = useSelector((state) => state.auth.user);
   const [success, setSuccess] = useState('');
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
@@ -65,12 +69,16 @@ const ProfileUpdateForm = () => {
       email: user?.email || '',
       phone: phoneParts.number,
       countryCode: phoneParts.code,
+      profilePic: user?.profilePic || '',
       bio: user?.bio || '',
     }
   });
 
   const onSubmit = async (data) => {
     setLoading(true);
+    setSuccess('');
+    setError('');
+    
     // Combine country code and phone number
     let phoneNumber = data.phone;
     if (phoneNumber.startsWith("0")) {
@@ -78,42 +86,41 @@ const ProfileUpdateForm = () => {
     }
     const fullPhone = `${data.countryCode}${phoneNumber}`;
 
-    // Mocking a successful update
-    setTimeout(() => {
-      dispatch(setUser({ ...user, ...data, phone: fullPhone }));
-      setSuccess('Profile updated successfully!');
+    try {
+      const response = await axiosInstance.patch('/users/update-me', {
+        ...data,
+        phone: fullPhone
+      });
+
+      if (response.data.success) {
+        dispatch(setUser(response.data.body.user));
+        setSuccess('Profile updated successfully!');
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to update profile');
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
   };
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
       {success && <Alert severity="success" sx={{ mb: 3 }}>{success}</Alert>}
+      {error && <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>}
       
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 4 }}>
-        <Box sx={{ position: 'relative' }}>
-          <Avatar 
-            sx={{ width: 100, height: 100, fontSize: '2rem', bgcolor: 'primary.main' }}
-          >
-            {user?.name?.charAt(0) || 'U'}
-          </Avatar>
-          <IconButton 
-            sx={{ 
-              position: 'absolute', 
-              bottom: 0, 
-              right: 0, 
-              bgcolor: 'background.paper',
-              boxShadow: 2,
-              '&:hover': { bgcolor: 'grey.100' }
-            }}
-            size="small"
-          >
-            <PhotoCameraIcon fontSize="small" />
-          </IconButton>
-        </Box>
-        <Typography variant="caption" sx={{ mt: 1, color: 'text.secondary' }}>
-          Update profile picture
-        </Typography>
+      <Box sx={{ mb: 4 }}>
+        <Controller
+          name="profilePic"
+          control={control}
+          render={({ field }) => (
+            <ImageUploadInput
+              label="Profile Picture"
+              value={field.value}
+              onChange={field.onChange}
+              error={errors.profilePic}
+            />
+          )}
+        />
       </Box>
 
       <Stack spacing={3}>

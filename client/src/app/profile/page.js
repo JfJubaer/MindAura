@@ -3,6 +3,7 @@
 import React from 'react';
 import { Box, Container, Paper, Typography, Tab, Tabs, Divider } from '@mui/material';
 import ProfileUpdateForm from '@/components/forms/ProfileUpdateForm';
+import PasswordUpdateForm from '@/components/forms/PasswordUpdateForm';
 
 export default function ProfilePage() {
   const [value, setValue] = React.useState(0);
@@ -30,7 +31,7 @@ export default function ProfilePage() {
           
           <Box sx={{ p: { xs: 3, md: 6 }, bgcolor: 'background.paper' }}>
             {value === 0 && <ProfileUpdateForm />}
-            {value === 1 && <Typography>Security settings coming soon...</Typography>}
+            {value === 1 && <PasswordUpdateForm />}
             {value === 2 && <Typography>Notification preferences coming soon...</Typography>}
           </Box>
         </Paper>

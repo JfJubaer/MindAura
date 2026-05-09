@@ -20,7 +20,9 @@ const FeaturedCourses = () => {
   useEffect(() => {
     const fetchFeaturedCourses = async () => {
       try {
-        const response = await axiosInstance.get("/courses?limit=3&sortBy=createdAt");
+        const response = await axiosInstance.get(
+          "/courses?limit=6&sortBy=createdAt",
+        );
         if (response.data.success) {
           setCourses(response.data.data);
         }
@@ -59,7 +61,11 @@ const FeaturedCourses = () => {
               Hand-picked curriculum to start your journey.
             </Typography>
           </Box>
-          <Link href="/courses" passHref style={{ textDecoration: 'none' }}>
+          <Link
+            href="/courses"
+            passHref
+            style={{ textDecoration: "none" }}
+          >
             <Button
               variant="text"
               size="large"
@@ -94,8 +100,11 @@ const FeaturedCourses = () => {
         </Grid>
 
         {!loading && courses.length === 0 && (
-          <Box sx={{ textAlign: 'center', py: 8 }}>
-            <Typography variant="h6" color="text.secondary">
+          <Box sx={{ textAlign: "center", py: 8 }}>
+            <Typography
+              variant="h6"
+              color="text.secondary"
+            >
               No courses available at the moment.
             </Typography>
           </Box>

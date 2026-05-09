@@ -107,9 +107,7 @@ const Header = () => {
         <Box
           sx={{ px: 2 }}
           onClick={(event) => event.stopPropagation()}
-        >
-          <ThemeModeToggle mobile />
-        </Box>
+        ></Box>
         {!user && !authLoading && (
           <ListItem disablePadding>
             <Link
@@ -275,7 +273,7 @@ const Header = () => {
                 flexGrow: 1,
                 display: { xs: "none", md: "flex" },
                 ml: 4,
-                gap: 3,
+                gap: 1,
               }}
             >
               {navLinks.map((link) => (

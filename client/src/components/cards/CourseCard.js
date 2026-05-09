@@ -40,6 +40,7 @@ const CourseCard = ({ course }) => {
           height="200"
           image={course.thumbnailUrl || 'https://via.placeholder.com/400x200?text=No+Image'}
           alt={course.name}
+          loading="lazy"
         />
         <Stack direction="row" spacing={1} sx={{ position: 'absolute', top: 12, left: 12 }}>
           <Chip 

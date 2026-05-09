@@ -68,7 +68,7 @@ const Testimonials = () => {
                   "{review.text}"
                 </Typography>
                 <Stack direction="row" spacing={2} alignItems="center">
-                  <Avatar src={review.avatar} sx={{ width: 48, height: 48 }} />
+                  <Avatar src={review.avatar} sx={{ width: 48, height: 48 }} imgProps={{ loading: 'lazy' }} />
                   <Box>
                     <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>{review.name}</Typography>
                     <Typography variant="caption" color="text.secondary">{review.role}</Typography>

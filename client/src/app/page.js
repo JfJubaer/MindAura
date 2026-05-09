@@ -1,13 +1,16 @@
 "use client";
 
 import React from 'react';
+import dynamic from 'next/dynamic';
 import Hero from '@/components/sections/Hero';
-import Features from '@/components/sections/Features';
 import FeaturedCourses from '@/components/sections/FeaturedCourses';
-import Stats from '@/components/sections/Stats';
-import Testimonials from '@/components/sections/Testimonials';
-import FAQ from '@/components/sections/FAQ';
-import Newsletter from '@/components/sections/Newsletter';
+
+// Dynamic imports for below-the-fold components
+const Features = dynamic(() => import('@/components/sections/Features'));
+const Stats = dynamic(() => import('@/components/sections/Stats'));
+const Testimonials = dynamic(() => import('@/components/sections/Testimonials'));
+const FAQ = dynamic(() => import('@/components/sections/FAQ'));
+const Newsletter = dynamic(() => import('@/components/sections/Newsletter'));
 import { Box } from '@mui/material';
 
 export default function Home() {

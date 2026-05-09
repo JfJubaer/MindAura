@@ -21,8 +21,12 @@ import SearchIcon from "@mui/icons-material/Search";
 import CourseCard from "@/components/cards/CourseCard";
 import CourseSkeleton from "@/components/skeletons/CourseSkeleton";
 import axiosInstance from "@/lib/axios/axiosInstance";
+import { useSearchParams } from "next/navigation";
 
 const CoursesPage = () => {
+  const searchParams = useSearchParams();
+  const instructorIdFromUrl = searchParams.get("instructor");
+
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -35,6 +39,7 @@ const CoursesPage = () => {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [sortBy, setSortBy] = useState("newest");
+  const [instructorId, setInstructorId] = useState(instructorIdFromUrl || "");
 
   const categories = [
     "All",
@@ -59,6 +64,7 @@ const CoursesPage = () => {
         minPrice,
         maxPrice,
         sortBy,
+        instructor: instructorId,
       });
 
       const response = await axiosInstance.get(`/courses?${params.toString()}`);
@@ -73,7 +79,7 @@ const CoursesPage = () => {
     } finally {
       setLoading(false);
     }
-  }, [page, searchTerm, category, minPrice, maxPrice, sortBy]);
+  }, [page, searchTerm, category, minPrice, maxPrice, sortBy, instructorId]);
 
   // Initial fetch and fetch on page change
   useEffect(() => {
@@ -91,7 +97,7 @@ const CoursesPage = () => {
     }, 500);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [searchTerm, category, minPrice, maxPrice, sortBy]);
+  }, [searchTerm, category, minPrice, maxPrice, sortBy, instructorId]);
 
   const handlePageChange = (event, value) => {
     setPage(value);
@@ -259,6 +265,7 @@ const CoursesPage = () => {
                   setMinPrice("");
                   setMaxPrice("");
                   setSortBy("newest");
+                  setInstructorId("");
                 }}
                 sx={{ fontWeight: 700 }}
               >

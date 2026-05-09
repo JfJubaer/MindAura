@@ -93,7 +93,6 @@ const Header = () => {
         ...(user.role === "admin" || user.role === "teacher"
           ? [{ name: "Add Course", href: "/courses/create" }]
           : [{ name: "Contact", href: "/contact" }]),
-       
       ]
     : [
         { name: "Home", href: "/" },
@@ -348,13 +347,7 @@ const Header = () => {
                         Add Course
                       </MenuItem>
                     )}
-                    <MenuItem
-                      component={Link}
-                      href="/settings"
-                      onClick={handleCloseMenu}
-                    >
-                      Settings
-                    </MenuItem>
+
                     <Divider />
                     <MenuItem
                       onClick={handleLogout}

@@ -123,6 +123,18 @@ const updatePassword = catchAsync(async (req, res, next) => {
   sendToken(user.role, user, 200, res);
 });
 
+const getAllInstructors = catchAsync(async (req, res, next) => {
+  const instructors = await UserModel.find({
+    role: { $in: ['teacher', 'admin'] },
+  }).select('name email profilePic bio role');
+
+  res.status(200).json({
+    success: true,
+    count: instructors.length,
+    body: { instructors },
+  });
+});
+
 module.exports = {
   signUp,
   login,
@@ -130,4 +142,5 @@ module.exports = {
   getSingleUser,
   updateMe,
   updatePassword,
+  getAllInstructors,
 };

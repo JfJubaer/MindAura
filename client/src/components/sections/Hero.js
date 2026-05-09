@@ -8,6 +8,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Box, Typography, Button, Container, Stack } from '@mui/material';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import Link from 'next/link';
 
 const Hero = () => {
   const slides = [
@@ -80,17 +81,27 @@ const Hero = () => {
                     {slide.subtitle}
                   </Typography>
                   <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                    <Button variant="contained" size="large" sx={{ py: 1.5, px: 4 }}>
-                      {slide.cta}
-                    </Button>
-                    <Button 
-                      variant="outlined" 
-                      size="large" 
-                      startIcon={<PlayCircleOutlineIcon />}
-                      sx={{ color: 'white', borderColor: 'white', py: 1.5, px: 4, '&:hover': { borderColor: 'primary.light', bgcolor: 'rgba(255,255,255,0.1)' } }}
-                    >
-                      Watch Demo
-                    </Button>
+                  
+
+                     <Link href="/courses" passHref style={{ textDecoration: 'none' }}>
+                                <Button
+                                  variant="outlined"
+                                  size="large"
+                                  sx={{ fontWeight: 700 }}
+                                >
+                                 Explore Courses
+                                </Button>
+                              </Link>
+                     <Link href="/login" passHref style={{ textDecoration: 'none' }}>
+                                <Button
+                                  variant="contained"
+                                  size="large"
+                                  sx={{ fontWeight: 700 }}
+                                >
+                               Subscribe to our Newsletter
+                                </Button>
+                              </Link>
+                
                   </Stack>
                 </Box>
               </Container>

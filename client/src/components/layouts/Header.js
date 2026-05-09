@@ -92,7 +92,8 @@ const Header = () => {
         { name: "Instructors", href: "/instructors" },
         ...(user.role === "admin" || user.role === "teacher"
           ? [{ name: "Add Course", href: "/courses/create" }]
-          : []),
+          : [{ name: "Contact", href: "/contact" }]),
+       
       ]
     : [
         { name: "Home", href: "/" },

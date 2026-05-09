@@ -18,11 +18,10 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Link from "next/link";
-import axios from "axios";
 import { useDispatch } from "react-redux";
-import { setUser } from "@/redux/features/authSlice";
+import { setUser, setToken } from "@/redux/features/authSlice";
 import { useRouter } from "next/navigation";
-import { API_URL } from "@/lib/config";
+import axiosInstance from "@/lib/axios/axiosInstance";
 
 const loginSchema = z.object({
   phone: z.string().min(11, "Phone number must be at least 11 digits"),
@@ -49,12 +48,11 @@ const LoginForm = () => {
     setLoading(true);
     setError("");
     try {
-      const response = await axios.post(`${API_URL}/users/login`, data);
+      const response = await axiosInstance.post("/users/login", data);
       if (response.data.success) {
-        // Mocking user data since server returns token.
-        // In a real app, we might decode the token or fetch user profile.
-        // For now, I'll set a basic user object.
-        dispatch(setUser({ name: "User", phone: data.phone }));
+        const { token } = response.data;
+        dispatch(setToken(token));
+        // We don't have user data yet, it will be fetched in the Header/Layout
         router.push("/");
       }
     } catch (err) {

@@ -2,8 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
+import { setUser, logout } from '@/redux/features/authSlice';
+import axiosInstance from '@/lib/axios/axiosInstance';
 import { 
   AppBar, 
   Toolbar, 
@@ -21,7 +23,8 @@ import {
   ListItemText,
   Divider,
   useTheme,
-  useMediaQuery
+  useMediaQuery,
+  CircularProgress
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -30,12 +33,36 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   
-  const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
   const router = useRouter();
+  const { user, token } = useSelector((state) => state.auth);
+
+  // Fetch user data if token exists but user is null
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (token && !user) {
+        setLoading(true);
+        try {
+          const response = await axiosInstance.get('/users/user');
+          if (response.data.success && response.data.body?.user) {
+            dispatch(setUser(response.data.body.user));
+          }
+        } catch (error) {
+          console.error("Failed to fetch user:", error);
+          dispatch(logout());
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchUser();
+  }, [token, user, dispatch]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,6 +75,12 @@ const Header = () => {
   const handleOpenMenu = (event) => setAnchorEl(event.currentTarget);
   const handleCloseMenu = () => setAnchorEl(null);
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    handleCloseMenu();
+    router.push('/login');
+  };
 
   const navLinks = user 
     ? [
@@ -77,12 +110,24 @@ const Header = () => {
             </Link>
           </ListItem>
         ))}
-        {!user && (
+        {!user && !loading && (
           <ListItem disablePadding>
             <Link href="/login" style={{ width: '100%', textDecoration: 'none' }}>
               <Button fullWidth variant="contained" sx={{ mt: 2 }}>Login</Button>
             </Link>
           </ListItem>
+        )}
+        {user && (
+          <>
+            <ListItem disablePadding>
+              <Link href="/profile" style={{ width: '100%', textDecoration: 'none', color: 'inherit' }}>
+                <ListItemText primary="Profile" sx={{ textAlign: 'center', py: 1 }} />
+              </Link>
+            </ListItem>
+            <ListItem disablePadding>
+              <Button fullWidth color="error" onClick={handleLogout} sx={{ mt: 2 }}>Logout</Button>
+            </ListItem>
+          </>
         )}
       </List>
     </Box>
@@ -95,7 +140,7 @@ const Header = () => {
         elevation={isScrolled ? 2 : 0} 
         sx={{ 
           bgcolor: isScrolled ? 'background.paper' : 'transparent',
-          color: isScrolled ? 'text.primary' : (isScrolled ? 'text.primary' : 'text.primary'), // Adjusted for clarity
+          color: 'text.primary',
           transition: 'all 0.3s ease',
           borderBottom: isScrolled ? '1px solid' : 'none',
           borderColor: 'divider',
@@ -135,32 +180,38 @@ const Header = () => {
             </Box>
 
             <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 2 }}>
-              {user ? (
+              {loading ? (
+                <CircularProgress size={24} />
+              ) : user ? (
                 <>
                   <Button 
                     onClick={handleOpenMenu}
                     endIcon={<KeyboardArrowDownIcon />}
-                    sx={{ color: 'text.primary' }}
+                    sx={{ color: 'text.primary', textTransform: 'none' }}
                   >
                     <Avatar sx={{ width: 32, height: 32, mr: 1, bgcolor: 'primary.main', fontSize: '0.875rem' }}>
                       {user.name?.charAt(0) || 'U'}
                     </Avatar>
-                    {user.name}
+                    <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                      {user.name}
+                    </Typography>
                   </Button>
                   <Menu
                     anchorEl={anchorEl}
                     open={Boolean(anchorEl)}
                     onClose={handleCloseMenu}
                     sx={{ mt: 1 }}
+                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                   >
                     <MenuItem component={Link} href="/profile" onClick={handleCloseMenu}>Profile</MenuItem>
                     <MenuItem component={Link} href="/settings" onClick={handleCloseMenu}>Settings</MenuItem>
                     <Divider />
-                    <MenuItem onClick={() => router.push('/login')} sx={{ color: 'error.main' }}>Logout</MenuItem>
+                    <MenuItem onClick={handleLogout} sx={{ color: 'error.main' }}>Logout</MenuItem>
                   </Menu>
                 </>
               ) : (
-                <Link href="/login">
+                <Link href="/login" passHref legacyBehavior>
                   <Button variant="contained">Login</Button>
                 </Link>
               )}

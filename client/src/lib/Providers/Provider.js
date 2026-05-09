@@ -5,23 +5,20 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "@/redux/store";
 import { setUser, logout } from "@/redux/features/authSlice";
-import axios from "axios";
+import axiosInstance from "@/lib/axios/axiosInstance";
 
 const AuthInitializer = ({ children }) => {
   const dispatch = useDispatch();
   const { token, user } = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    const verifySession = async () => {
-      if (token) {
+     const verifySession = async () => {
+      if (token && !user) {
         try {
           // Verify token and get fresh user data from the server
-          const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/user`, {
-            headers: { Authorization: `Bearer ${token}` }
-          });
+          const response = await axiosInstance.get("/users/user");
           
           if (response.data.success) {
-            dispatch(setUser({ user: response.data.body.user, token }));
+            dispatch(setUser(response.data.body.user));
           }
         } catch (error) {
           console.error("Session verification failed:", error);
@@ -33,8 +30,10 @@ const AuthInitializer = ({ children }) => {
       }
     };
 
+  useEffect(() => {
+ 
     verifySession();
-  }, [dispatch, token]);
+  }, [dispatch, token, user]);
 
   return children;
 };

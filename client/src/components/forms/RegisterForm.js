@@ -19,9 +19,8 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Link from "next/link";
-import axios from "axios";
 import { useRouter } from "next/navigation";
-import { API_URL } from "@/lib/config";
+import axiosInstance from "@/lib/axios/axiosInstance";
 
 const registerSchema = z
   .object({
@@ -56,7 +55,7 @@ const RegisterForm = () => {
     setLoading(true);
     setError("");
     try {
-      const response = await axios.post(`${API_URL}/users/sign-up`, {
+      const response = await axiosInstance.post("/users/sign-up", {
         name: data.name,
         phone: data.phone,
         email: data.email,

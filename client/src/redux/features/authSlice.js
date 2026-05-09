@@ -1,9 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// Helper to get token from localStorage safely
+const getInitialToken = () => {
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("token");
+  }
+  return null;
+};
+
 const initialState = {
   user: null,
-  token: null,
+  token: getInitialToken(),
   isAuthenticated: false,
+  isLoading: true,
 };
 
 const authSlice = createSlice({
@@ -11,15 +20,30 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      state.user = action.payload.user;
-      state.token = action.payload.token || state.token;
-      state.isAuthenticated = !!action.payload.user;
+      state.user = action.payload;
+      state.isAuthenticated = !!action.payload;
+      state.isLoading = false;
+    },
+    setToken: (state, action) => {
+      state.token = action.payload;
+      if (typeof window !== "undefined") {
+        if (action.payload) {
+          localStorage.setItem("token", action.payload);
+        } else {
+          localStorage.removeItem("token");
+        }
+      }
+    },
+    setLoading: (state, action) => {
+      state.isLoading = action.payload;
     },
     logout: (state) => {
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
-      // Clear cookies if needed (though usually handled by middleware or manually)
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("token");
+      }
     },
     updateUser: (state, action) => {
       state.user = { ...state.user, ...action.payload };
@@ -27,5 +51,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { setUser, logout, updateUser } = authSlice.actions;
+export const { setUser, setToken, setLoading, logout, updateUser } = authSlice.actions;
 export default authSlice.reducer;

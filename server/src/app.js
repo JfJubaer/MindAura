@@ -19,12 +19,16 @@ const router = require('./app/route');
 // Creating the express app
 const app = express();
 
-const BASE_DOMAIN = "spiderpie.com";
+const BASE_DOMAIN = 'spiderpie.com';
+const ALLOWED_ORIGINS = [
+  'https://wisdora-client.vercel.app',
+  'http://localhost:3000',
+];
 
 const corsOptions = {
   origin: function (origin, callback) {
     // 1️⃣ Allow any origin in development
-    if (process.env.NODE_ENV !== "production") {
+    if (process.env.NODE_ENV !== 'production') {
       return callback(null, true);
     }
 
@@ -32,25 +36,30 @@ const corsOptions = {
     if (!origin) return callback(null, true);
 
     try {
+      // 3️⃣ Check if origin is in allowed list
+      if (ALLOWED_ORIGINS.includes(origin)) {
+        return callback(null, true);
+      }
+
       const url = new URL(origin);
       const hostname = url.hostname;
 
-      // 3️⃣ Allow base domain and any subdomain
+      // 4️⃣ Allow base domain and any subdomain
       if (hostname === BASE_DOMAIN || hostname.endsWith(`.${BASE_DOMAIN}`)) {
         return callback(null, true);
       }
 
       console.error(`CORS Blocked for origin: ${origin}`);
-      return callback(new Error("Not allowed by CORS"));
+      return callback(new Error('Not allowed by CORS'));
     } catch (err) {
       console.error(`Invalid origin: ${origin}`);
-      return callback(new Error("Invalid origin"));
+      return callback(new Error('Invalid origin'));
     }
   },
 
   credentials: true, // Allows cookies and Authorization headers
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 };
 
 // Apply the middleware

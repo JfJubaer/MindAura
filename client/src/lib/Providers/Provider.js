@@ -4,12 +4,12 @@ import React, { useEffect } from "react";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "@/redux/store";
-import { setUser, logout } from "@/redux/features/authSlice";
+import { setUser, logout, setLoading } from "@/redux/features/authSlice";
 import axiosInstance from "@/lib/axios/axiosInstance";
 
 const AuthInitializer = ({ children }) => {
   const dispatch = useDispatch();
-  const { token, user } = useSelector((state) => state.auth);
+  const { token, user, isLoading } = useSelector((state) => state.auth);
 
   useEffect(() => {
     // CRITICAL: Always sync Redux token → localStorage so axiosInstance can read it.
@@ -23,15 +23,28 @@ const AuthInitializer = ({ children }) => {
     }
 
     const verifySession = async () => {
-      if (!token) return;
+      if (!token) {
+        dispatch(setLoading(false));
+        return;
+      }
 
       try {
-        // Always verify and refresh user data on mount
-        const response = await axiosInstance.get("/users/user");
+        // Set timeout for user fetch (5 seconds)
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 5000);
+
+        const response = await axiosInstance.get("/users/user", {
+          signal: controller.signal,
+        });
+        clearTimeout(timeout);
+
         if (response.data.success) {
           dispatch(setUser(response.data.body.user));
+        } else {
+          dispatch(setLoading(false));
         }
       } catch (error) {
+        dispatch(setLoading(false));
         console.error("Session verification failed:", error);
         if (error.response?.status === 401) {
           dispatch(logout());
@@ -49,7 +62,10 @@ const AuthInitializer = ({ children }) => {
 const Providers = ({ children }) => {
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate
+        loading={null}
+        persistor={persistor}
+      >
         <AuthInitializer>{children}</AuthInitializer>
       </PersistGate>
     </Provider>

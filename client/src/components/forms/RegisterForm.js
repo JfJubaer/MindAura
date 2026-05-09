@@ -21,11 +21,14 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axiosInstance from "@/lib/axios/axiosInstance";
+import { Controller } from "react-hook-form";
+import PhoneInputField from "./inputs/PhoneInputField";
 
 const registerSchema = z
   .object({
     name: z.string().min(2, "Name must be at least 2 characters"),
-    phone: z.string().min(11, "Phone number must be at least 11 digits"),
+    phone: z.string().min(6, "Phone number is too short"),
+    countryCode: z.string(),
     email: z.string().email("Invalid email address"),
     password: z.string().min(6, "Password must be at least 6 characters"),
     confirmPassword: z.string().min(6, "Confirm password is required"),
@@ -46,18 +49,34 @@ const RegisterForm = () => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(registerSchema),
+    defaultValues: {
+      name: "",
+      phone: "",
+      countryCode: "+880",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
   });
 
   const onSubmit = async (data) => {
     setLoading(true);
     setError("");
     try {
+      // Combine country code and phone number
+      let phoneNumber = data.phone;
+      if (phoneNumber.startsWith("0")) {
+        phoneNumber = phoneNumber.substring(1);
+      }
+      const fullPhone = `${data.countryCode}${phoneNumber}`;
+
       const response = await axiosInstance.post("/users/sign-up", {
         name: data.name,
-        phone: data.phone,
+        phone: fullPhone,
         email: data.email,
         password: data.password,
       });
@@ -108,11 +127,24 @@ const RegisterForm = () => {
           helperText={errors.name?.message}
         />
 
-        <TextField
-          {...register("phone")}
-          label="Phone Number"
-          error={!!errors.phone}
-          helperText={errors.phone?.message}
+        <Controller
+          name="phone"
+          control={control}
+          render={({ field }) => (
+            <Controller
+              name="countryCode"
+              control={control}
+              render={({ field: codeField }) => (
+                <PhoneInputField
+                  {...field}
+                  countryCode={codeField.value}
+                  onCountryCodeChange={codeField.onChange}
+                  error={!!errors.phone}
+                  helperText={errors.phone?.message}
+                />
+              )}
+            />
+          )}
         />
 
         <TextField

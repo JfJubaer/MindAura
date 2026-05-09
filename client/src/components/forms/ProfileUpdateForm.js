@@ -18,11 +18,14 @@ import {
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '@/redux/features/authSlice';
+import { Controller } from "react-hook-form";
+import PhoneInputField from "./inputs/PhoneInputField";
 
 const profileSchema = z.object({
   name: z.string().min(2, 'Name is required'),
   email: z.string().email('Invalid email address'),
-  phone: z.string().min(11, 'Phone number must be at least 11 digits'),
+  phone: z.string().min(6, 'Phone number is too short'),
+  countryCode: z.string(),
   bio: z.string().optional(),
 });
 
@@ -32,25 +35,52 @@ const ProfileUpdateForm = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
+  // Helper to split phone number into country code and rest
+  const getPhoneParts = (fullPhone) => {
+    if (!fullPhone) return { code: "+880", number: "" };
+    
+    // Check for common country codes
+    const codes = ["+880", "+1", "+44", "+91", "+971", "+966"];
+    for (const code of codes) {
+      if (fullPhone.startsWith(code)) {
+        return { code, number: fullPhone.substring(code.length) };
+      }
+    }
+    // Default if no match (maybe it was stored without code)
+    if (fullPhone.startsWith("0")) return { code: "+880", number: fullPhone.substring(1) };
+    return { code: "+880", number: fullPhone };
+  };
+
+  const phoneParts = getPhoneParts(user?.phone);
+
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(profileSchema),
     defaultValues: {
       name: user?.name || '',
       email: user?.email || '',
-      phone: user?.phone || '',
+      phone: phoneParts.number,
+      countryCode: phoneParts.code,
       bio: user?.bio || '',
     }
   });
 
   const onSubmit = async (data) => {
     setLoading(true);
+    // Combine country code and phone number
+    let phoneNumber = data.phone;
+    if (phoneNumber.startsWith("0")) {
+      phoneNumber = phoneNumber.substring(1);
+    }
+    const fullPhone = `${data.countryCode}${phoneNumber}`;
+
     // Mocking a successful update
     setTimeout(() => {
-      dispatch(setUser({ ...user, ...data }));
+      dispatch(setUser({ ...user, ...data, phone: fullPhone }));
       setSuccess('Profile updated successfully!');
       setLoading(false);
     }, 1500);
@@ -102,11 +132,24 @@ const ProfileUpdateForm = () => {
           helperText={errors.email?.message}
         />
 
-        <TextField
-          {...register('phone')}
-          label="Phone Number"
-          error={!!errors.phone}
-          helperText={errors.phone?.message}
+        <Controller
+          name="phone"
+          control={control}
+          render={({ field }) => (
+            <Controller
+              name="countryCode"
+              control={control}
+              render={({ field: codeField }) => (
+                <PhoneInputField
+                  {...field}
+                  countryCode={codeField.value}
+                  onCountryCodeChange={codeField.onChange}
+                  error={!!errors.phone}
+                  helperText={errors.phone?.message}
+                />
+              )}
+            />
+          )}
         />
         
         <TextField

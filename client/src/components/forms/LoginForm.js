@@ -22,9 +22,12 @@ import { useDispatch } from "react-redux";
 import { setUser, setToken } from "@/redux/features/authSlice";
 import { useRouter } from "next/navigation";
 import axiosInstance from "@/lib/axios/axiosInstance";
+import { Controller } from "react-hook-form";
+import PhoneInputField from "./inputs/PhoneInputField";
 
 const loginSchema = z.object({
-  phone: z.string().min(11, "Phone number must be at least 11 digits"),
+  phone: z.string().min(6, "Phone number is too short"),
+  countryCode: z.string(),
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
@@ -39,20 +42,37 @@ const LoginForm = () => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(loginSchema),
+    defaultValues: {
+      phone: "",
+      countryCode: "+880",
+      password: "",
+    },
   });
 
   const onSubmit = async (data) => {
     setLoading(true);
     setError("");
     try {
-      const response = await axiosInstance.post("/users/login", data);
+      // Combine country code and phone number
+      // If phone starts with 0, remove it (common in some countries like BD)
+      let phoneNumber = data.phone;
+      if (phoneNumber.startsWith("0")) {
+        phoneNumber = phoneNumber.substring(1);
+      }
+      const fullPhone = `${data.countryCode}${phoneNumber}`;
+
+      const response = await axiosInstance.post("/users/login", {
+        phone: fullPhone,
+        password: data.password,
+      });
+      
       if (response.data.success) {
         const { token } = response.data;
         dispatch(setToken(token));
-        // We don't have user data yet, it will be fetched in the Header/Layout
         router.push("/");
       }
     } catch (err) {
@@ -80,14 +100,26 @@ const LoginForm = () => {
         </Alert>
       )}
 
-      <TextField
-        {...register("phone")}
-        label="Phone Number"
-        placeholder="e.g. 01700000000"
-        error={!!errors.phone}
-        helperText={errors.phone?.message}
-        margin="normal"
-        autoFocus
+      <Controller
+        name="phone"
+        control={control}
+        render={({ field }) => (
+          <Controller
+            name="countryCode"
+            control={control}
+            render={({ field: codeField }) => (
+              <PhoneInputField
+                {...field}
+                countryCode={codeField.value}
+                onCountryCodeChange={codeField.onChange}
+                error={!!errors.phone}
+                helperText={errors.phone?.message}
+                margin="normal"
+                autoFocus
+              />
+            )}
+          />
+        )}
       />
 
       <TextField
@@ -97,6 +129,7 @@ const LoginForm = () => {
         error={!!errors.password}
         helperText={errors.password?.message}
         margin="normal"
+        fullWidth
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">

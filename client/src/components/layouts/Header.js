@@ -64,7 +64,7 @@ const Header = () => {
     fetchUser();
   }, [token, user, dispatch]);
 
-  console.log("userData", user);
+  // console.log("userData", user);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -163,6 +163,40 @@ const Header = () => {
               >
                 <ListItemText
                   primary="Profile"
+                  sx={{ textAlign: "center", py: 1 }}
+                />
+              </Link>
+            </ListItem>
+
+            {user.role === "admin" && (
+              <ListItem disablePadding>
+                <Link
+                  href="/admin"
+                  style={{
+                    width: "100%",
+                    textDecoration: "none",
+                    color: "inherit",
+                  }}
+                >
+                  <ListItemText
+                    primary="Admin Panel"
+                    sx={{ textAlign: "center", py: 1 }}
+                  />
+                </Link>
+              </ListItem>
+            )}
+
+            <ListItem disablePadding>
+              <Link
+                href="/settings"
+                style={{
+                  width: "100%",
+                  textDecoration: "none",
+                  color: "inherit",
+                }}
+              >
+                <ListItemText
+                  primary="Settings"
                   sx={{ textAlign: "center", py: 1 }}
                 />
               </Link>

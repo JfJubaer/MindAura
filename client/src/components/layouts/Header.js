@@ -183,6 +183,23 @@ const Header = () => {
                 </Link>
               </ListItem>
             )}
+            {(user.role === "admin" || user.role === "teacher") && (
+              <ListItem disablePadding>
+                <Link
+                  href="/courses/create"
+                  style={{
+                    width: "100%",
+                    textDecoration: "none",
+                    color: "inherit",
+                  }}
+                >
+                  <ListItemText
+                    primary="Add Course"
+                    sx={{ textAlign: "center", py: 1 }}
+                  />
+                </Link>
+              </ListItem>
+            )}
 
             <ListItem disablePadding>
               <Button

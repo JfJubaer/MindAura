@@ -41,7 +41,7 @@ const FAQ = () => {
             <AccordionSummary expandIcon={<ExpandMoreIcon color="primary" />} sx={{ py: 1 }}>
               <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>{faq.q}</Typography>
             </AccordionSummary>
-            <AccordionDetails sx={{ bgcolor: 'grey.50', pt: 2 }}>
+            <AccordionDetails sx={{ bgcolor: 'background.default', pt: 2 }}>
               <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.8 }}>
                 {faq.a}
               </Typography>

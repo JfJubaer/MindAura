@@ -28,6 +28,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import ThemeModeToggle from "@/components/layouts/ThemeModeToggle";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -102,6 +103,12 @@ const Header = () => {
             </Link>
           </ListItem>
         ))}
+        <Box
+          sx={{ px: 2 }}
+          onClick={(event) => event.stopPropagation()}
+        >
+          <ThemeModeToggle mobile />
+        </Box>
         {!user && !authLoading && (
           <ListItem disablePadding>
             <Link
@@ -287,6 +294,7 @@ const Header = () => {
                 gap: 2,
               }}
             >
+              <ThemeModeToggle />
               {authLoading ? (
                 <CircularProgress size={24} />
               ) : user ? (
@@ -383,15 +391,24 @@ const Header = () => {
               )}
             </Box>
 
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{ display: { md: "none" }, color: "text.primary" }}
+            <Box
+              sx={{
+                display: { xs: "flex", md: "none" },
+                alignItems: "center",
+                gap: 1,
+              }}
             >
-              <MenuIcon />
-            </IconButton>
+              <ThemeModeToggle />
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ color: "text.primary" }}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Box>
           </Toolbar>
         </Container>
       </AppBar>

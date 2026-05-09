@@ -376,7 +376,7 @@ const HelpSupportPage = () => {
       </Container>
 
       {/* ── FAQ Accordion ────────────────────────────────────────── */}
-      <Box sx={{ bgcolor: "grey.50", py: 10 }}>
+      <Box sx={{ bgcolor: "background.default", py: 10 }}>
         <Container maxWidth="md">
           {/* Category Filter Chips */}
           <Stack
@@ -714,7 +714,7 @@ const HelpSupportPage = () => {
                 color: "primary.main",
                 fontWeight: 800,
                 px: 4,
-                "&:hover": { bgcolor: "grey.100" },
+                "&:hover": { bgcolor: "action.hover" },
                 borderRadius: 2,
               }}
             >

@@ -30,7 +30,7 @@ const Testimonials = () => {
   ];
 
   return (
-    <Box sx={{ py: 10, bgcolor: 'grey.50' }}>
+    <Box sx={{ py: 10, bgcolor: 'background.default' }}>
       <Container maxWidth="lg">
         <Box sx={{ textAlign: 'center', mb: 8 }}>
           <Typography variant="h2" sx={{ fontWeight: 800, mb: 2 }}>

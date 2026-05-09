@@ -76,7 +76,7 @@ const AdminPanel = () => {
 
   return (
     <ProtectedRoute allowedRoles={["admin"]}>
-      <Box sx={{ py: 6, bgcolor: "grey.50", minHeight: "100vh" }}>
+      <Box sx={{ py: 6, bgcolor: "background.default", minHeight: "100vh" }}>
         <Container maxWidth="lg">
           <Typography variant="h3" sx={{ fontWeight: 800, mb: 4 }}>
             Admin Panel
@@ -113,7 +113,7 @@ const AdminPanel = () => {
 
               <TableContainer component={Paper} sx={{ borderRadius: 4, overflow: "hidden", border: "1px solid", borderColor: "divider" }} elevation={0}>
                 <Table>
-                  <TableHead sx={{ bgcolor: "grey.100" }}>
+                  <TableHead sx={{ bgcolor: "action.hover" }}>
                     <TableRow>
                       <TableCell sx={{ fontWeight: 700 }}>Course Name</TableCell>
                       <TableCell sx={{ fontWeight: 700 }}>Author</TableCell>
@@ -131,7 +131,7 @@ const AdminPanel = () => {
                       </TableRow>
                     ) : courses.length > 0 ? (
                       courses.map((course) => (
-                        <TableRow key={course._id} sx={{ "&:hover": { bgcolor: "grey.50" } }}>
+                        <TableRow key={course._id} sx={{ "&:hover": { bgcolor: "action.hover" } }}>
                           <TableCell>
                             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                               <Avatar src={course.thumbnailUrl} variant="rounded" sx={{ width: 50, height: 30 }} />

@@ -42,7 +42,7 @@ const InstructorsPage = () => {
   }, []);
 
   return (
-    <Box sx={{ py: 10, bgcolor: "grey.50", minHeight: "100vh" }}>
+    <Box sx={{ py: 10, bgcolor: "background.default", minHeight: "100vh" }}>
       <Container maxWidth="lg">
         {/* Header Section */}
         <Box sx={{ textAlign: "center", mb: 8 }}>

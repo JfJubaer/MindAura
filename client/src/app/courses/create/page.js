@@ -9,7 +9,7 @@ import ProtectedRoute from '@/components/auth/ProtectedRoute';
 export default function CreateCoursePage() {
   return (
     <ProtectedRoute allowedRoles={['admin', 'teacher']}>
-      <Box sx={{ py: 6, bgcolor: 'grey.50', minHeight: '100vh' }}>
+      <Box sx={{ py: 6, bgcolor: 'background.default', minHeight: '100vh' }}>
         <Container maxWidth="md">
           <Breadcrumbs sx={{ mb: 4 }}>
             <Link href="/" passHref legacyBehavior>

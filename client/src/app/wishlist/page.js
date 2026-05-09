@@ -99,7 +99,7 @@ const WishlistPage = () => {
   }
 
   return (
-    <Box sx={{ py: 8, bgcolor: "grey.50", minHeight: "100vh" }}>
+    <Box sx={{ py: 8, bgcolor: "background.default", minHeight: "100vh" }}>
       <Container maxWidth="lg">
         <Box sx={{ mb: 6 }}>
           <Typography variant="h3" sx={{ fontWeight: 800, mb: 1 }}>

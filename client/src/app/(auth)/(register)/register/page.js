@@ -11,7 +11,7 @@ export default function RegisterPage() {
         minHeight: 'calc(100vh - 80px)', 
         display: 'flex', 
         alignItems: 'center', 
-        bgcolor: 'grey.50',
+        bgcolor: 'background.default',
         py: 8
       }}
     >

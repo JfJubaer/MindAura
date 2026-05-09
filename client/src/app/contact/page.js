@@ -9,7 +9,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 export default function ContactPage() {
   return (
-    <Box sx={{ py: 10, bgcolor: 'grey.50' }}>
+    <Box sx={{ py: 10, bgcolor: 'background.default' }}>
       <Container maxWidth="lg">
         <Grid container spacing={8}>
           <Grid size={{ xs: 12, md: 5 }}>

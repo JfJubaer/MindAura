@@ -13,7 +13,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <Box sx={{ py: 10, bgcolor: 'grey.50', minHeight: '100vh' }}>
+    <Box sx={{ py: 10, bgcolor: 'background.default', minHeight: '100vh' }}>
       <Container maxWidth="md">
         <Typography variant="h3" sx={{ fontWeight: 800, mb: 4 }}>Account Settings</Typography>
         

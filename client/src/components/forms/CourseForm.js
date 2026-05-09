@@ -16,6 +16,7 @@ import {
   Card,
   CardContent,
   Divider,
+  MenuItem,
 } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import AddIcon from '@mui/icons-material/Add';
@@ -23,9 +24,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import axiosInstance from '@/lib/axios/axiosInstance';
 import ImageUploadInput from './inputs/ImageUploadInput';
 
+const categories = ['Mental Health', 'Personal Development', 'Meditation', 'Psychology', 'Yoga', 'Other'];
+
 const courseSchema = z.object({
   name: z.string().min(5, 'Name must be at least 5 characters'),
   description: z.string().min(20, 'Description must be at least 20 characters'),
+  category: z.string().min(1, 'Category is required'),
   price: z.preprocess((val) => Number(val), z.number().min(0, 'Price must be at least 0')),
   thumbnailUrl: z.string().url('Thumbnail must be a valid URL'),
   classes: z.array(z.object({
@@ -52,6 +56,7 @@ const CourseForm = ({ initialData, isEdit = false }) => {
     defaultValues: initialData || {
       name: '',
       description: '',
+      category: 'Mental Health',
       price: 0,
       thumbnailUrl: '',
       classes: [{ name: '', videoUrl: '', thumbnailUrl: '', des: '' }],
@@ -101,6 +106,21 @@ const CourseForm = ({ initialData, isEdit = false }) => {
           helperText={errors.name?.message}
           fullWidth
         />
+
+        <TextField
+          {...register('category')}
+          select
+          label="Category"
+          error={!!errors.category}
+          helperText={errors.category?.message}
+          fullWidth
+        >
+          {categories.map((option) => (
+            <MenuItem key={option} value={option}>
+              {option}
+            </MenuItem>
+          ))}
+        </TextField>
 
         <TextField
           {...register('description')}

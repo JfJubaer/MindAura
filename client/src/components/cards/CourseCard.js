@@ -41,6 +41,17 @@ const CourseCard = ({ course }) => {
           image={course.thumbnailUrl || 'https://via.placeholder.com/400x200?text=No+Image'}
           alt={course.name}
         />
+        <Stack direction="row" spacing={1} sx={{ position: 'absolute', top: 12, left: 12 }}>
+          <Chip 
+            label={course.category || 'Other'} 
+            size="small"
+            sx={{ 
+              bgcolor: 'rgba(255, 255, 255, 0.9)', 
+              fontWeight: 700,
+              backdropFilter: 'blur(4px)'
+            }} 
+          />
+        </Stack>
         <Chip 
           label={course.price === 0 ? 'Free' : `$${course.price}`}
           color={course.price === 0 ? 'success' : 'primary'}

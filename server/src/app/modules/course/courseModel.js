@@ -14,6 +14,12 @@ const courseSchema = new Schema(
       type: String,
       required: [true, 'Course description is required'],
     },
+    category: {
+      type: String,
+      required: [true, 'Category is required'],
+      enum: ['Mental Health', 'Personal Development', 'Meditation', 'Psychology', 'Yoga', 'Other'],
+      default: 'Other',
+    },
     price: {
       type: Number,
       required: [true, 'Course price is required'],

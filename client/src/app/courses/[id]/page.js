@@ -54,12 +54,13 @@ const CourseDetailsPage = () => {
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
   const [enrollLoading, setEnrollLoading] = useState(false);
+  const [unenrollLoading, setUnenrollLoading] = useState(false);
   const [wishlistLoading, setWishlistLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
   const isEnrolled = user?.enrolledCourses?.some(
-    (eid) => eid?.toString() === id
+    (eid) => eid?.toString() === id,
   );
   const isInWishlist = wishlistItems.some((item) => item?._id === id);
 
@@ -107,9 +108,23 @@ const CourseDetailsPage = () => {
     fetchWishlist();
   }, [id, user, authLoading, dispatch]);
 
+  const syncCurrentUser = async () => {
+    const response = await axiosInstance.get("/users/user");
+    if (response.data.success) {
+      dispatch(setUser(response.data.body.user));
+    }
+  };
+
   const handleEnroll = async () => {
     if (!user) {
       router.push("/login");
+      return;
+    }
+
+    if (course?.price > 0) {
+      setError(
+        "Due to technical issues, paid courses are not available. Please go for the free courses for now.",
+      );
       return;
     }
 
@@ -118,9 +133,11 @@ const CourseDetailsPage = () => {
     setError("");
 
     try {
-      const response = await axiosInstance.post(`/users/enroll/${id}`);
+      const response = await axiosInstance.post("/enrollments/", {
+        courseId: id,
+      });
       if (response.data.success) {
-        dispatch(setUser(response.data.body.user));
+        await syncCurrentUser();
         setSuccess("Successfully enrolled! Redirecting to My Learning...");
         setTimeout(() => {
           router.push("/my-learning");
@@ -130,6 +147,30 @@ const CourseDetailsPage = () => {
       setError(err.response?.data?.message || "Failed to enroll in course");
     } finally {
       setEnrollLoading(false);
+    }
+  };
+
+  const handleUnenroll = async () => {
+    if (!user) {
+      router.push("/login");
+      return;
+    }
+
+    setUnenrollLoading(true);
+    setSuccess("");
+    setError("");
+
+    try {
+      const response = await axiosInstance.delete(`/enrollments/${id}`);
+      if (response.data.success) {
+        await syncCurrentUser();
+        setSuccess("You have been unenrolled from this course.");
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to unenroll from course");
+    } finally {
+      setUnenrollLoading(false);
+      setTimeout(() => setSuccess(""), 3000);
     }
   };
 
@@ -175,7 +216,10 @@ const CourseDetailsPage = () => {
 
   if (error && !course) {
     return (
-      <Container maxWidth="lg" sx={{ py: 10 }}>
+      <Container
+        maxWidth="lg"
+        sx={{ py: 10 }}
+      >
         <Alert severity="error">{error}</Alert>
       </Container>
     );
@@ -192,19 +236,32 @@ const CourseDetailsPage = () => {
     <Box sx={{ py: { xs: 4, md: 6 }, bgcolor: "background.default" }}>
       <Container maxWidth="lg">
         {success && (
-          <Alert severity="success" sx={{ mb: 4, borderRadius: 2 }}>
+          <Alert
+            severity="success"
+            sx={{ mb: 4, borderRadius: 2 }}
+          >
             {success}
           </Alert>
         )}
         {error && (
-          <Alert severity="error" sx={{ mb: 4, borderRadius: 2 }}>
+          <Alert
+            severity="error"
+            sx={{ mb: 4, borderRadius: 2 }}
+          >
             {error}
           </Alert>
         )}
 
-        <Grid container spacing={6}>
+        <Grid
+          container
+          spacing={6}
+        >
           {/* Left Column */}
-          <Grid item xs={12} md={7}>
+          <Grid
+            item
+            xs={12}
+            md={7}
+          >
             {galleryImages.length > 0 && (
               <Paper
                 elevation={0}
@@ -241,7 +298,14 @@ const CourseDetailsPage = () => {
               </Paper>
             )}
 
-            <Typography variant="h3" sx={{ fontWeight: 900, mb: 3, fontSize: { xs: "2rem", md: "3rem" } }}>
+            <Typography
+              variant="h3"
+              sx={{
+                fontWeight: 900,
+                mb: 3,
+                fontSize: { xs: "2rem", md: "3rem" },
+              }}
+            >
               {course.name}
             </Typography>
 
@@ -249,7 +313,13 @@ const CourseDetailsPage = () => {
               direction={{ xs: "column", sm: "row" }}
               spacing={{ xs: 2, sm: 3 }}
               alignItems={{ xs: "flex-start", sm: "center" }}
-              divider={<Divider orientation="vertical" flexItem sx={{ display: { xs: "none", sm: "block" } }} />}
+              divider={
+                <Divider
+                  orientation="vertical"
+                  flexItem
+                  sx={{ display: { xs: "none", sm: "block" } }}
+                />
+              }
               sx={{ mb: 4 }}
             >
               <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -258,21 +328,37 @@ const CourseDetailsPage = () => {
                   sx={{ width: 40, height: 40 }}
                 />
                 <Box>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                  >
                     Instructor
                   </Typography>
-                  <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                  <Typography
+                    variant="subtitle2"
+                    sx={{ fontWeight: 700 }}
+                  >
                     {course.author?.name}
                   </Typography>
                 </Box>
               </Box>
               <Box>
-                <Typography variant="body2" color="text.secondary">
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                >
                   Rating
                 </Typography>
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <Rating value={course.rating || 0} readOnly size="small" />
-                  <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                  <Rating
+                    value={course.rating || 0}
+                    readOnly
+                    size="small"
+                  />
+                  <Typography
+                    variant="subtitle2"
+                    sx={{ fontWeight: 700 }}
+                  >
                     ({course.rating || 0})
                   </Typography>
                 </Box>
@@ -281,7 +367,10 @@ const CourseDetailsPage = () => {
 
             <Divider sx={{ mb: 4 }} />
 
-            <Typography variant="h5" sx={{ fontWeight: 800, mb: 2 }}>
+            <Typography
+              variant="h5"
+              sx={{ fontWeight: 800, mb: 2 }}
+            >
               Course Description
             </Typography>
             <Typography
@@ -292,7 +381,10 @@ const CourseDetailsPage = () => {
               {course.description}
             </Typography>
 
-            <Typography variant="h5" sx={{ fontWeight: 800, mb: 3 }}>
+            <Typography
+              variant="h5"
+              sx={{ fontWeight: 800, mb: 3 }}
+            >
               Curriculum ({course.classes?.length || 0} Lessons)
             </Typography>
             <Stack spacing={2}>
@@ -321,10 +413,16 @@ const CourseDetailsPage = () => {
                     <PlayCircleOutlineIcon />
                   </Box>
                   <Box sx={{ flexGrow: 1 }}>
-                    <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                    <Typography
+                      variant="subtitle2"
+                      sx={{ fontWeight: 700 }}
+                    >
                       {item.name}
                     </Typography>
-                    <Typography variant="caption" color="text.secondary">
+                    <Typography
+                      variant="caption"
+                      color="text.secondary"
+                    >
                       {item.des}
                     </Typography>
                   </Box>
@@ -332,7 +430,10 @@ const CourseDetailsPage = () => {
                     label="Preview"
                     size="small"
                     variant="outlined"
-                    sx={{ borderRadius: 1.5, alignSelf: { xs: "flex-start", sm: "center" } }}
+                    sx={{
+                      borderRadius: 1.5,
+                      alignSelf: { xs: "flex-start", sm: "center" },
+                    }}
                   />
                 </Paper>
               ))}
@@ -340,7 +441,11 @@ const CourseDetailsPage = () => {
           </Grid>
 
           {/* Right Column: Sticky Card */}
-          <Grid item xs={12} md={5}>
+          <Grid
+            item
+            xs={12}
+            md={5}
+          >
             <Paper
               elevation={0}
               sx={{
@@ -355,7 +460,12 @@ const CourseDetailsPage = () => {
             >
               <Typography
                 variant="h3"
-                sx={{ fontWeight: 900, color: "primary.main", mb: 1, fontSize: { xs: "2rem", md: "3rem" } }}
+                sx={{
+                  fontWeight: 900,
+                  color: "primary.main",
+                  mb: 1,
+                  fontSize: { xs: "2rem", md: "3rem" },
+                }}
               >
                 {course.price === 0 ? "Free" : `$${course.price}`}
               </Typography>
@@ -367,30 +477,69 @@ const CourseDetailsPage = () => {
                 Full Lifetime Access
               </Typography>
 
-              <Stack spacing={2} sx={{ mb: 4 }}>
-                <Button
-                  variant="contained"
-                  size="large"
-                  fullWidth
-                  onClick={
-                    isEnrolled ? () => router.push("/my-learning") : handleEnroll
-                  }
-                  disabled={enrollLoading}
-                  sx={{
-                    py: 2,
-                    borderRadius: 3,
-                    fontWeight: 800,
-                    fontSize: { xs: "1rem", md: "1.1rem" },
-                  }}
-                >
-                  {enrollLoading ? (
-                    <CircularProgress size={24} color="inherit" />
-                  ) : isEnrolled ? (
-                    "Go to My Learning"
-                  ) : (
-                    "Enroll Now"
-                  )}
-                </Button>
+              <Stack
+                spacing={2}
+                sx={{ mb: 4 }}
+              >
+                {isEnrolled ? (
+                  <>
+                    <Button
+                      variant="contained"
+                      size="large"
+                      fullWidth
+                      onClick={() => router.push("/my-learning")}
+                      sx={{
+                        py: 2,
+                        borderRadius: 3,
+                        fontWeight: 800,
+                        fontSize: { xs: "1rem", md: "1.1rem" },
+                      }}
+                    >
+                      Go to My Learning
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      size="large"
+                      fullWidth
+                      onClick={handleUnenroll}
+                      disabled={unenrollLoading}
+                      sx={{ py: 1.5, borderRadius: 3, fontWeight: 700 }}
+                    >
+                      {unenrollLoading ? (
+                        <CircularProgress
+                          size={24}
+                          color="inherit"
+                        />
+                      ) : (
+                        "Unenroll"
+                      )}
+                    </Button>
+                  </>
+                ) : (
+                  <Button
+                    variant="contained"
+                    size="large"
+                    fullWidth
+                    onClick={handleEnroll}
+                    disabled={enrollLoading}
+                    sx={{
+                      py: 2,
+                      borderRadius: 3,
+                      fontWeight: 800,
+                      fontSize: { xs: "1rem", md: "1.1rem" },
+                    }}
+                  >
+                    {enrollLoading ? (
+                      <CircularProgress
+                        size={24}
+                        color="inherit"
+                      />
+                    ) : (
+                      "Enroll Now"
+                    )}
+                  </Button>
+                )}
 
                 <Button
                   variant="outlined"
@@ -401,7 +550,10 @@ const CourseDetailsPage = () => {
                   sx={{ py: 1.5, borderRadius: 3, fontWeight: 700 }}
                 >
                   {wishlistLoading ? (
-                    <CircularProgress size={24} color="inherit" />
+                    <CircularProgress
+                      size={24}
+                      color="inherit"
+                    />
                   ) : isInWishlist ? (
                     "Remove from Wishlist"
                   ) : (
@@ -410,7 +562,10 @@ const CourseDetailsPage = () => {
                 </Button>
               </Stack>
 
-              <Typography variant="subtitle1" sx={{ fontWeight: 800, mb: 2 }}>
+              <Typography
+                variant="subtitle1"
+                sx={{ fontWeight: 800, mb: 2 }}
+              >
                 This course includes:
               </Typography>
               <List sx={{ p: 0 }}>
@@ -432,7 +587,10 @@ const CourseDetailsPage = () => {
                     text: "Certificate of completion",
                   },
                 ].map((item, idx) => (
-                  <ListItem key={idx} sx={{ px: 0, py: 1 }}>
+                  <ListItem
+                    key={idx}
+                    sx={{ px: 0, py: 1 }}
+                  >
                     <ListItemIcon sx={{ minWidth: 36, color: "primary.main" }}>
                       {item.icon}
                     </ListItemIcon>

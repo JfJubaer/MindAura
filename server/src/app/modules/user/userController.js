@@ -8,7 +8,7 @@ const { sendToken } = require('../../../utils/authUtil');
 const validator = require('validator');
 const UserModel = require('./userModel');
 
-const getSingleUser = catchAsync(async (req, res) => {
+const getSingleUser = catchAsync(async (req, res, next) => {
   const user = await UserModel.findById(req.user);
   if (!user) {
     return next(new AppError('User not found', 404));
@@ -21,7 +21,9 @@ const getSingleUser = catchAsync(async (req, res) => {
 
 const signUp = catchAsync(async (req, res, next) => {
   const { name, phone, password, email } = req.body;
-  
+
+  console.log(name, phone, password, email);
+
   if (!password || password.length < 6)
     return next(new AppError('Password must be at least 6 characters', 400));
   if (!phone || phone.length < 11)
@@ -35,14 +37,16 @@ const signUp = catchAsync(async (req, res, next) => {
 
   const isExistPhone = await UserModel.findOne({ phone });
   if (isExistPhone) {
-    return next(new AppError('User with this phone number already exists', 400));
-  } 
+    return next(
+      new AppError('User with this phone number already exists', 400),
+    );
+  }
 
   const user = await UserModel.create({
     phone,
     password,
     name,
-    email
+    email,
   });
 
   sendToken(user.role, user, 201, res);
@@ -64,14 +68,13 @@ const login = catchAsync(async (req, res, next) => {
   sendToken(user.role, user, 200, res);
 });
 
-const logout  = catchAsync(async (req, res, next) => {  
+const logout = catchAsync(async (req, res, next) => {
   res.clearCookie('jwt');
   res.status(200).json({
     success: true,
     message: 'Logged out successfully',
-  });  
+  });
 });
-
 
 module.exports = {
   signUp,

@@ -86,14 +86,6 @@ userSchema.pre(['save'], async function (next) {
   next();
 });
 
-// Automatically delete oldest notifications
-userSchema.pre('save', function (next) {
-  if (this.notifications.length > 10) {
-    this.notifications = this.notifications.slice(-10);
-  }
-  next();
-});
-
 // Check if the user changed password after JWT issued
 userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   if (this.password_changed_at) {

@@ -15,18 +15,72 @@ const createCourse = catchAsync(async (req, res, next) => {
 });
 
 const getAllCourses = catchAsync(async (req, res, next) => {
-  const courses = await CourseModel.find().populate('author', 'name profilePic');
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const skip = (page - 1) * limit;
+
+  const courses = await CourseModel.find({ isApproved: true })
+    .populate('author', 'name profilePic')
+    .skip(skip)
+    .limit(limit);
+
+  const total = await CourseModel.countDocuments({ isApproved: true });
+
   res.status(200).json({
     success: true,
     results: courses.length,
+    total,
+    page,
+    totalPages: Math.ceil(total / limit),
     data: courses,
   });
 });
 
+const getUnapprovedCourses = catchAsync(async (req, res, next) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const skip = (page - 1) * limit;
+
+  const courses = await CourseModel.find({ isApproved: false })
+    .populate('author', 'name profilePic')
+    .skip(skip)
+    .limit(limit);
+
+  const total = await CourseModel.countDocuments({ isApproved: false });
+
+  res.status(200).json({
+    success: true,
+    results: courses.length,
+    total,
+    page,
+    totalPages: Math.ceil(total / limit),
+    data: courses,
+  });
+});
+
+const approveCourse = catchAsync(async (req, res, next) => {
+  const course = await CourseModel.findByIdAndUpdate(
+    req.params.id,
+    { isApproved: true },
+    { new: true, runValidators: true },
+  );
+
+  if (!course) {
+    return next(new AppError('No course found with that ID', 404));
+  }
+
+  res.status(200).json({
+    success: true,
+    data: course,
+  });
+});
+
 const getSingleCourse = catchAsync(async (req, res, next) => {
-  const course = await CourseModel.findById(req.params.id)
-    .populate('author', 'name profilePic');
-    
+  const course = await CourseModel.findById(req.params.id).populate(
+    'author',
+    'name profilePic',
+  );
+
   if (!course) {
     return next(new AppError('No course found with that ID', 404));
   }
@@ -37,10 +91,14 @@ const getSingleCourse = catchAsync(async (req, res, next) => {
 });
 
 const updateCourse = catchAsync(async (req, res, next) => {
-  const updatedCourse = await CourseModel.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  const updatedCourse = await CourseModel.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
   if (!updatedCourse) {
     return next(new AppError('No course found with that ID', 404));
   }
@@ -64,6 +122,8 @@ const deleteCourse = catchAsync(async (req, res, next) => {
 module.exports = {
   createCourse,
   getAllCourses,
+  getUnapprovedCourses,
+  approveCourse,
   getSingleCourse,
   updateCourse,
   deleteCourse,

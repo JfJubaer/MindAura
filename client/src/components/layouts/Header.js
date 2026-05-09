@@ -295,6 +295,15 @@ const Header = () => {
                     >
                       Profile
                     </MenuItem>
+                    {user.role === "admin" && (
+                      <MenuItem
+                        component={Link}
+                        href="/admin"
+                        onClick={handleCloseMenu}
+                      >
+                        Admin Panel
+                      </MenuItem>
+                    )}
                     {(user.role === "admin" || user.role === "teacher") && (
                       <MenuItem
                         component={Link}

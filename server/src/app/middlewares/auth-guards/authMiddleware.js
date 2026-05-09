@@ -38,7 +38,7 @@ const verifyToken = catchAsync(async (req, res, next) => {
   }
 
   // Grant access to protected route
-  req.user = user.id;
+  req.user = user;
   req.decodedToken = decoded;
   next();
 });

@@ -11,7 +11,8 @@ const AuthInitializer = ({ children }) => {
   const dispatch = useDispatch();
   const { token, user } = useSelector((state) => state.auth);
 
-     const verifySession = async () => {
+  useEffect(() => {
+    const verifySession = async () => {
       if (token && !user) {
         try {
           // Verify token and get fresh user data from the server
@@ -30,8 +31,6 @@ const AuthInitializer = ({ children }) => {
       }
     };
 
-  useEffect(() => {
- 
     verifySession();
   }, [dispatch, token, user]);
 

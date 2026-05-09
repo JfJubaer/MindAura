@@ -9,7 +9,7 @@ const validator = require('validator');
 const UserModel = require('./userModel');
 
 const getSingleUser = catchAsync(async (req, res, next) => {
-  const user = await UserModel.findById(req.user);
+  const user = await UserModel.findById(req.user.id);
   if (!user) {
     return next(new AppError('User not found', 404));
   }

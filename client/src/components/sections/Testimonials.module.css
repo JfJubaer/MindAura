@@ -1,0 +1,45 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-8);
+}
+
+.reviewCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.text {
+  font-style: italic;
+  color: var(--text-main);
+  margin-bottom: var(--space-6);
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--secondary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.name {
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.role {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}

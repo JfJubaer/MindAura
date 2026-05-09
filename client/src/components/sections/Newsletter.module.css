@@ -1,0 +1,39 @@
+.newsletter {
+  padding: var(--space-12) 0;
+}
+
+.container {
+  background-color: var(--primary);
+  border-radius: var(--radius-xl);
+  padding: var(--space-12);
+  color: white;
+  text-align: center;
+}
+
+.content h2 {
+  margin-bottom: var(--space-4);
+}
+
+.content p {
+  margin-bottom: var(--space-8);
+  opacity: 0.9;
+}
+
+.form {
+  display: flex;
+  max-width: 500px;
+  margin: 0 auto;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+.input {
+  flex: 1;
+}
+
+@media (max-width: 640px) {
+  .form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

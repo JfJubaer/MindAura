@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { Box, Container, Grid2 as Grid, Typography, Card, CardMedia, CardContent, Button, Chip, Stack, Avatar } from '@mui/material';
+import { Box, Container, Grid2 as Grid, Typography, Card, CardMedia, CardContent, Button, Chip, Stack, Avatar, Divider } from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import StarIcon from '@mui/icons-material/Star';
 

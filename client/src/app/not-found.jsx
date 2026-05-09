@@ -1,9 +1,10 @@
-/* eslint-disable react/react-in-jsx-scope */
 "use client";
-import { blueColor } from "@/lib/data/commonData";
-import { Box, Button, Typography } from "@mui/material";
+
+import React from 'react';
+import { Box, Button, Typography, Container, Stack } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Link from 'next/link';
 
 export default function NotFound() {
   const router = useRouter();
@@ -11,35 +12,54 @@ export default function NotFound() {
   return (
     <Box
       sx={{
-        padding: "30px 0 10px 0",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
-        gap: "10px",
+        minHeight: '80vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        py: 10
       }}
     >
-      <Image
-        src={"/not_found.svg"}
-        width={400}
-        alt="not_found"
-        height={"200"}
-      />
+      <Container maxWidth="sm">
+        <Box sx={{ mb: 6, opacity: 0.9 }}>
+          <Image
+            src="/not_found.svg"
+            width={400}
+            height={300}
+            alt="Page not found"
+            style={{ maxWidth: '100%', height: 'auto' }}
+            priority
+          />
+        </Box>
 
-      <Typography variant="h6">
-        Oops! The page you&apos;re looking for was not found.
-      </Typography>
-      <Button
-        variant="outline"
-        sx={{
-          borderRadius: "20px",
-          border: `1px solid ${blueColor}`,
-          padding: "5px 30px",
-        }}
-        onClick={() => router.back()}
-      >
-        Go Back
-      </Button>
+        <Typography variant="h3" sx={{ fontWeight: 800, mb: 2, color: 'text.primary' }}>
+          Lost in Space?
+        </Typography>
+        
+        <Typography variant="h6" color="text.secondary" sx={{ mb: 6, fontWeight: 400 }}>
+          Oops! The page you're looking for has vanished into thin air. Let's get you back on track with Wisdora.
+        </Typography>
+
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center">
+          <Button
+            variant="contained"
+            size="large"
+            sx={{ px: 4, py: 1.5 }}
+            onClick={() => router.push('/')}
+          >
+            Back to Home
+          </Button>
+          <Button
+            variant="outlined"
+            size="large"
+            sx={{ px: 4, py: 1.5 }}
+            onClick={() => router.back()}
+          >
+            Go Back
+          </Button>
+        </Stack>
+      </Container>
     </Box>
   );
 }

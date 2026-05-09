@@ -1,11 +1,11 @@
+/* eslint-disable no-unused-vars */
 "use client";
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
-import { setUser, logout } from "@/redux/features/authSlice";
-import axiosInstance from "@/lib/axios/axiosInstance";
+import { logout } from "@/redux/features/authSlice";
 import {
   AppBar,
   Toolbar,
@@ -33,36 +33,13 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const dispatch = useDispatch();
   const router = useRouter();
-  const { user, token } = useSelector((state) => state.auth);
-
-  // Fetch user data if token exists but user is null
-  useEffect(() => {
-    const fetchUser = async () => {
-      if (token && !user) {
-        setLoading(true);
-        try {
-          const response = await axiosInstance.get("/users/user");
-          if (response.data.success && response.data.body?.user) {
-            dispatch(setUser(response.data.body.user));
-          }
-        } catch (error) {
-          console.error("Failed to fetch user:", error);
-          dispatch(logout());
-        } finally {
-          setLoading(false);
-        }
-      }
-    };
-
-    fetchUser();
-  }, [token, user, dispatch]);
+  // Auth init is handled in Provider.js — no duplicate fetch needed here
+  const { user, isLoading: authLoading } = useSelector((state) => state.auth);
 
   // console.log("userData", user);
 
@@ -84,22 +61,13 @@ const Header = () => {
     router.push("/login");
   };
 
-  const navLinks = user
-    ? [
-        { name: "Home", href: "/" },
-        { name: "Courses", href: "/courses" },
-        { name: "My Learning", href: "/my-learning" },
-        { name: "Instructors", href: "/instructors" },
-        ...(user.role === "admin" || user.role === "teacher"
-          ? [{ name: "Add Course", href: "/courses/create" }]
-          : [{ name: "Contact", href: "/contact" }]),
-      ]
-    : [
-        { name: "Home", href: "/" },
-        { name: "Courses", href: "/courses" },
-        { name: "About", href: "/about" },
-        { name: "Contact", href: "/contact" },
-      ];
+  const navLinks = [
+    { name: "Home", href: "/" },
+    { name: "Courses", href: "/courses" },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
+    { name: "Help & Support", href: "/help-support" },
+  ];
 
   const drawer = (
     <Box
@@ -134,7 +102,7 @@ const Header = () => {
             </Link>
           </ListItem>
         ))}
-        {!user && !loading && (
+        {!user && !authLoading && (
           <ListItem disablePadding>
             <Link
               href="/login"
@@ -167,6 +135,36 @@ const Header = () => {
                 />
               </Link>
             </ListItem>
+            <ListItem disablePadding>
+              <Link
+                href="/my-learning"
+                style={{
+                  width: "100%",
+                  textDecoration: "none",
+                  color: "inherit",
+                }}
+              >
+                <ListItemText
+                  primary="My Learning"
+                  sx={{ textAlign: "center", py: 1 }}
+                />
+              </Link>
+            </ListItem>
+            <ListItem disablePadding>
+              <Link
+                href="/wishlist"
+                style={{
+                  width: "100%",
+                  textDecoration: "none",
+                  color: "inherit",
+                }}
+              >
+                <ListItemText
+                  primary="Wishlist"
+                  sx={{ textAlign: "center", py: 1 }}
+                />
+              </Link>
+            </ListItem>
 
             {user.role === "admin" && (
               <ListItem disablePadding>
@@ -186,21 +184,6 @@ const Header = () => {
               </ListItem>
             )}
 
-            <ListItem disablePadding>
-              <Link
-                href="/settings"
-                style={{
-                  width: "100%",
-                  textDecoration: "none",
-                  color: "inherit",
-                }}
-              >
-                <ListItemText
-                  primary="Settings"
-                  sx={{ textAlign: "center", py: 1 }}
-                />
-              </Link>
-            </ListItem>
             <ListItem disablePadding>
               <Button
                 fullWidth
@@ -287,7 +270,7 @@ const Header = () => {
                 gap: 2,
               }}
             >
-              {loading ? (
+              {authLoading ? (
                 <CircularProgress size={24} />
               ) : user ? (
                 <>
@@ -329,6 +312,21 @@ const Header = () => {
                     >
                       Profile
                     </MenuItem>
+                    <MenuItem
+                      component={Link}
+                      href="/my-learning"
+                      onClick={handleCloseMenu}
+                    >
+                      My Learning
+                    </MenuItem>
+                    <MenuItem
+                      component={Link}
+                      href="/wishlist"
+                      onClick={handleCloseMenu}
+                    >
+                      Wishlist
+                    </MenuItem>
+
                     {user.role === "admin" && (
                       <MenuItem
                         component={Link}

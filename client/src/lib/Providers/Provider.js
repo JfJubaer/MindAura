@@ -12,27 +12,36 @@ const AuthInitializer = ({ children }) => {
   const { token, user } = useSelector((state) => state.auth);
 
   useEffect(() => {
+    // CRITICAL: Always sync Redux token → localStorage so axiosInstance can read it.
+    // redux-persist rehydrates token into Redux state but NOT into localStorage["token"].
+    if (typeof window !== "undefined") {
+      if (token) {
+        localStorage.setItem("token", token);
+      } else {
+        localStorage.removeItem("token");
+      }
+    }
+
     const verifySession = async () => {
-      if (token && !user) {
-        try {
-          // Verify token and get fresh user data from the server
-          const response = await axiosInstance.get("/users/user");
-          
-          if (response.data.success) {
-            dispatch(setUser(response.data.body.user));
-          }
-        } catch (error) {
-          console.error("Session verification failed:", error);
-          // If token is invalid or expired, log out
-          if (error.response?.status === 401) {
-            dispatch(logout());
-          }
+      if (!token) return;
+
+      try {
+        // Always verify and refresh user data on mount
+        const response = await axiosInstance.get("/users/user");
+        if (response.data.success) {
+          dispatch(setUser(response.data.body.user));
+        }
+      } catch (error) {
+        console.error("Session verification failed:", error);
+        if (error.response?.status === 401) {
+          dispatch(logout());
+          localStorage.removeItem("token");
         }
       }
     };
 
     verifySession();
-  }, [dispatch, token, user]);
+  }, [dispatch, token]);
 
   return children;
 };

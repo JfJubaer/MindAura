@@ -23,10 +23,16 @@ const verifyToken = catchAsync(async (req, res, next) => {
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
   // Check if user still exists
-  const user = await UserModel.findById(decoded.id).select('+password_changed_at');
+  const user = await UserModel.findById(decoded.id).select(
+    '+password_changed_at',
+  );
+
   if (!user) {
     return next(
-      new AppError('The user belonging to this token does no longer exist.', 401),
+      new AppError(
+        'The user belonging to this token does no longer exist.',
+        401,
+      ),
     );
   }
 

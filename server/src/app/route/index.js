@@ -9,11 +9,13 @@ const router = require('express').Router();
 const userRouter = require('../modules/user/userRoutes');
 const uploadRouter = require('../modules/pictureUpload/uploadRoutes');
 const courseRouter = require('../modules/course/courseRoutes');
+const wishlistRouter = require('../modules/wishlist/wishlistRoutes');
 
 // Registering all routers
 router.use('/users', userRouter);
 router.use('/upload', uploadRouter);
 router.use('/courses', courseRouter);
+router.use('/wishlist', wishlistRouter);
 // The 404 route
 router.all('*', (req, res, next) =>
   next(new AppError('No Such Endpoint', 404)),

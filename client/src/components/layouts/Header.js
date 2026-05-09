@@ -90,6 +90,9 @@ const Header = () => {
         { name: "Courses", href: "/courses" },
         { name: "My Learning", href: "/my-learning" },
         { name: "Instructors", href: "/instructors" },
+        ...(user.role === "admin" || user.role === "teacher"
+          ? [{ name: "Add Course", href: "/courses/create" }]
+          : []),
       ]
     : [
         { name: "Home", href: "/" },
@@ -292,6 +295,15 @@ const Header = () => {
                     >
                       Profile
                     </MenuItem>
+                    {(user.role === "admin" || user.role === "teacher") && (
+                      <MenuItem
+                        component={Link}
+                        href="/courses/create"
+                        onClick={handleCloseMenu}
+                      >
+                        Add Course
+                      </MenuItem>
+                    )}
                     <MenuItem
                       component={Link}
                       href="/settings"

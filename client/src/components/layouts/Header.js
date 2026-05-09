@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -22,8 +21,6 @@ import {
   ListItem,
   ListItemText,
   Divider,
-  useTheme,
-  useMediaQuery,
   CircularProgress,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -35,8 +32,6 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const dispatch = useDispatch();
   const router = useRouter();

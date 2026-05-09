@@ -41,7 +41,7 @@ const Hero = () => {
     <Box
       sx={{
         width: "100%",
-        height: { xs: "auto", md: "70vh" },
+        minHeight: { xs: 480, md: 560 },
         position: "relative",
       }}
     >
@@ -59,7 +59,7 @@ const Hero = () => {
             <Box
               sx={{
                 width: "100%",
-                height: { xs: "500px", md: "100%" },
+                minHeight: { xs: 480, md: 560 },
                 backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.4)), url(${slide.image})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
@@ -68,11 +68,11 @@ const Hero = () => {
               }}
             >
               <Container maxWidth="lg">
-                <Box sx={{ maxWidth: "700px", color: "white" }}>
+                <Box sx={{ maxWidth: "700px", color: "white", py: { xs: 8, md: 0 } }}>
                   <Typography
                     variant="h1"
                     sx={{
-                      fontSize: { xs: "2.5rem", md: "3.5rem" },
+                      fontSize: { xs: "2.2rem", sm: "2.8rem", md: "3.5rem" },
                       fontWeight: 800,
                       mb: 2,
                       lineHeight: 1.1,
@@ -87,6 +87,7 @@ const Hero = () => {
                       opacity: 0.9,
                       fontWeight: 400,
                       lineHeight: 1.6,
+                      fontSize: { xs: "1rem", md: "1.25rem" },
                     }}
                   >
                     {slide.subtitle}
@@ -98,11 +99,12 @@ const Hero = () => {
                     <Link
                       href="/courses"
                       passHref
-                      style={{ textDecoration: "none" }}
+                      style={{ textDecoration: "none", width: "100%" }}
                     >
                       <Button
                         variant="outlined"
                         size="large"
+                        fullWidth
                         sx={{ fontWeight: 700, bgcolor: "white" }}
                       >
                         Explore Courses
@@ -111,11 +113,12 @@ const Hero = () => {
                     <Link
                       href="/login"
                       passHref
-                      style={{ textDecoration: "none" }}
+                      style={{ textDecoration: "none", width: "100%" }}
                     >
                       <Button
                         variant="contained"
                         size="large"
+                        fullWidth
                         sx={{ fontWeight: 700 }}
                       >
                         Subscribe to our Newsletter

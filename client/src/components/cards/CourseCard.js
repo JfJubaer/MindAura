@@ -38,7 +38,7 @@ const CourseCard = ({ course }) => {
       <Box sx={{ position: "relative" }}>
         <CardMedia
           component="img"
-          height="200"
+          sx={{ height: { xs: 220, sm: 200 } }}
           image={
             course.thumbnailUrl ||
             "https://via.placeholder.com/400x200?text=No+Image"
@@ -70,12 +70,18 @@ const CourseCard = ({ course }) => {
             right: 12,
             fontWeight: 700,
             boxShadow: 2,
+            maxWidth: "calc(100% - 24px)",
           }}
         />
       </Box>
 
       <CardContent
-        sx={{ flexGrow: 1, p: 3, display: "flex", flexDirection: "column" }}
+        sx={{
+          flexGrow: 1,
+          p: { xs: 2.5, md: 3 },
+          display: "flex",
+          flexDirection: "column",
+        }}
       >
         <Typography
           gutterBottom
@@ -155,6 +161,7 @@ const CourseCard = ({ course }) => {
                 fontWeight: 700,
                 mt: 1,
                 py: 1,
+                minHeight: 44,
                 "&:hover": { bgcolor: "primary.main", color: "white" },
               }}
             >

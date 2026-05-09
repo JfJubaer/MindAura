@@ -5,7 +5,7 @@ import { Box, Container, Typography, TextField, Button, Paper, Stack } from '@mu
 
 const Newsletter = () => {
   return (
-    <Box sx={{ py: 10 }}>
+    <Box sx={{ py: { xs: 8, md: 10 } }}>
       <Container maxWidth="lg">
         <Paper 
           elevation={0}
@@ -13,7 +13,7 @@ const Newsletter = () => {
             bgcolor: 'primary.main', 
             color: 'white', 
             borderRadius: 6, 
-            p: { xs: 4, md: 8 },
+            p: { xs: 3, sm: 4, md: 8 },
             textAlign: 'center',
             position: 'relative',
             overflow: 'hidden'
@@ -23,19 +23,19 @@ const Newsletter = () => {
           <Box 
             sx={{ 
               position: 'absolute', 
-              top: -50, 
-              right: -50, 
-              width: 200, 
-              height: 200, 
+              top: { xs: -30, md: -50 }, 
+              right: { xs: -30, md: -50 }, 
+              width: { xs: 120, md: 200 }, 
+              height: { xs: 120, md: 200 }, 
               borderRadius: '50%', 
               bgcolor: 'rgba(255,255,255,0.1)' 
             }} 
           />
           
-          <Typography variant="h3" sx={{ fontWeight: 800, mb: 2 }}>
+          <Typography variant="h3" sx={{ fontWeight: 800, mb: 2, fontSize: { xs: "2rem", md: "3rem" } }}>
             Join the Wisdora Community
           </Typography>
-          <Typography variant="h6" sx={{ mb: 6, opacity: 0.9, maxWidth: '600px', mx: 'auto' }}>
+          <Typography variant="h6" sx={{ mb: { xs: 4, md: 6 }, opacity: 0.9, maxWidth: '600px', mx: 'auto', fontSize: { xs: "1rem", md: "1.25rem" } }}>
             Subscribe to our newsletter for weekly mindfulness tips, course discounts, and expert insights.
           </Typography>
 
@@ -59,7 +59,8 @@ const Newsletter = () => {
               variant="contained" 
               color="secondary" 
               size="large" 
-              sx={{ px: 4, py: 1.5, fontWeight: 700 }}
+              fullWidth
+              sx={{ px: 4, py: 1.5, fontWeight: 700, width: { xs: "100%", sm: "auto" } }}
             >
               Subscribe Now
             </Button>

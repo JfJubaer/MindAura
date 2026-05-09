@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 "use client";
 
 import React, { useState } from 'react';
@@ -157,13 +158,13 @@ const CourseForm = ({ initialData, isEdit = false }) => {
 
         <Divider />
 
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: { xs: 'flex-start', sm: 'center' }, flexDirection: { xs: 'column', sm: 'row' }, gap: 2 }}>
           <Typography variant="h5" sx={{ fontWeight: 800, color: 'primary.main' }}>Course Content</Typography>
           <Button 
             startIcon={<AddIcon />} 
             variant="contained" 
             onClick={() => append({ name: '', videoUrl: '', thumbnailUrl: '', des: '' })}
-            sx={{ borderRadius: 2 }}
+            sx={{ borderRadius: 2, width: { xs: '100%', sm: 'auto' } }}
           >
             Add Class
           </Button>
@@ -179,7 +180,7 @@ const CourseForm = ({ initialData, isEdit = false }) => {
             >
               <DeleteIcon fontSize="small" />
             </IconButton>
-            <CardContent sx={{ p: 4 }}>
+            <CardContent sx={{ p: { xs: 2.5, md: 4 } }}>
               <Stack spacing={3}>
                 <Typography variant="subtitle1" sx={{ fontWeight: 700, color: 'text.secondary' }}>Class #{index + 1}</Typography>
                 

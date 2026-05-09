@@ -67,7 +67,7 @@ const PasswordUpdateForm = () => {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ maxWidth: 500 }}>
+    <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ maxWidth: 500, width: "100%" }}>
       <Typography variant="h6" sx={{ mb: 3, fontWeight: 700 }}>Update Password</Typography>
       
       {success && <Alert severity="success" sx={{ mb: 3 }}>{success}</Alert>}

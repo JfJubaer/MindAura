@@ -165,7 +165,7 @@ const CourseDetailsPage = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          height: "100vh",
+          minHeight: "100vh",
         }}
       >
         <CircularProgress size={60} />
@@ -189,7 +189,7 @@ const CourseDetailsPage = () => {
   ].filter((img) => img);
 
   return (
-    <Box sx={{ py: 6, bgcolor: "background.default" }}>
+    <Box sx={{ py: { xs: 4, md: 6 }, bgcolor: "background.default" }}>
       <Container maxWidth="lg">
         {success && (
           <Alert severity="success" sx={{ mb: 4, borderRadius: 2 }}>
@@ -221,7 +221,7 @@ const CourseDetailsPage = () => {
                   navigation
                   pagination={{ clickable: true }}
                   autoplay={{ delay: 5000 }}
-                  style={{ height: 450 }}
+                  style={{ height: "100%" }}
                 >
                   {galleryImages.map((img, index) => (
                     <SwiperSlide key={index}>
@@ -231,7 +231,7 @@ const CourseDetailsPage = () => {
                         alt={`Slide ${index}`}
                         sx={{
                           width: "100%",
-                          height: "100%",
+                          height: { xs: 240, sm: 320, md: 450 },
                           objectFit: "cover",
                         }}
                       />
@@ -241,14 +241,15 @@ const CourseDetailsPage = () => {
               </Paper>
             )}
 
-            <Typography variant="h3" sx={{ fontWeight: 900, mb: 3 }}>
+            <Typography variant="h3" sx={{ fontWeight: 900, mb: 3, fontSize: { xs: "2rem", md: "3rem" } }}>
               {course.name}
             </Typography>
 
             <Stack
-              direction="row"
-              spacing={3}
-              alignItems="center"
+              direction={{ xs: "column", sm: "row" }}
+              spacing={{ xs: 2, sm: 3 }}
+              alignItems={{ xs: "flex-start", sm: "center" }}
+              divider={<Divider orientation="vertical" flexItem sx={{ display: { xs: "none", sm: "block" } }} />}
               sx={{ mb: 4 }}
             >
               <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -265,7 +266,6 @@ const CourseDetailsPage = () => {
                   </Typography>
                 </Box>
               </Box>
-              <Divider orientation="vertical" flexItem />
               <Box>
                 <Typography variant="body2" color="text.secondary">
                   Rating
@@ -301,10 +301,11 @@ const CourseDetailsPage = () => {
                   key={index}
                   variant="outlined"
                   sx={{
-                    p: 2,
+                    p: { xs: 1.5, sm: 2 },
                     borderRadius: 3,
                     display: "flex",
-                    alignItems: "center",
+                    alignItems: { xs: "flex-start", sm: "center" },
+                    flexDirection: { xs: "column", sm: "row" },
                     gap: 2,
                   }}
                 >
@@ -331,7 +332,7 @@ const CourseDetailsPage = () => {
                     label="Preview"
                     size="small"
                     variant="outlined"
-                    sx={{ borderRadius: 1.5 }}
+                    sx={{ borderRadius: 1.5, alignSelf: { xs: "flex-start", sm: "center" } }}
                   />
                 </Paper>
               ))}
@@ -347,14 +348,14 @@ const CourseDetailsPage = () => {
                 borderRadius: 6,
                 border: "1px solid",
                 borderColor: "divider",
-                position: "sticky",
+                position: { xs: "static", md: "sticky" },
                 top: 100,
                 bgcolor: "background.paper",
               }}
             >
               <Typography
                 variant="h3"
-                sx={{ fontWeight: 900, color: "primary.main", mb: 1 }}
+                sx={{ fontWeight: 900, color: "primary.main", mb: 1, fontSize: { xs: "2rem", md: "3rem" } }}
               >
                 {course.price === 0 ? "Free" : `$${course.price}`}
               </Typography>
@@ -379,7 +380,7 @@ const CourseDetailsPage = () => {
                     py: 2,
                     borderRadius: 3,
                     fontWeight: 800,
-                    fontSize: "1.1rem",
+                    fontSize: { xs: "1rem", md: "1.1rem" },
                   }}
                 >
                   {enrollLoading ? (

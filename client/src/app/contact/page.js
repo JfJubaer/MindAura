@@ -9,13 +9,13 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 export default function ContactPage() {
   return (
-    <Box sx={{ py: 10, bgcolor: 'background.default' }}>
+    <Box sx={{ py: { xs: 8, md: 10 }, bgcolor: 'background.default' }}>
       <Container maxWidth="lg">
-        <Grid container spacing={8}>
+        <Grid container spacing={{ xs: 5, md: 8 }}>
           <Grid size={{ xs: 12, md: 5 }}>
-            <Typography variant="h2" sx={{ fontWeight: 800, mb: 3 }}>Get in Touch</Typography>
-            <Typography variant="h6" color="text.secondary" sx={{ mb: 6 }}>
-              Have questions about our courses or need assistance with your mindfulness journey? We're here to help.
+            <Typography variant="h2" sx={{ fontWeight: 800, mb: 3, fontSize: { xs: "2rem", md: "3rem" } }}>Get in Touch</Typography>
+            <Typography variant="h6" color="text.secondary" sx={{ mb: { xs: 4, md: 6 }, fontSize: { xs: "1rem", md: "1.25rem" } }}>
+              Have questions about our courses or need assistance with your mindfulness journey? We&apos;re here to help.
             </Typography>
             
             <Stack spacing={4}>
@@ -52,7 +52,7 @@ export default function ContactPage() {
           </Grid>
 
           <Grid size={{ xs: 12, md: 7 }}>
-            <Paper elevation={4} sx={{ p: { xs: 4, md: 6 }, borderRadius: 4 }}>
+            <Paper elevation={4} sx={{ p: { xs: 3, sm: 4, md: 6 }, borderRadius: 4 }}>
               <ContactForm />
             </Paper>
           </Grid>

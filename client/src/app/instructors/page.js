@@ -42,10 +42,10 @@ const InstructorsPage = () => {
   }, []);
 
   return (
-    <Box sx={{ py: 10, bgcolor: "background.default", minHeight: "100vh" }}>
+    <Box sx={{ py: { xs: 8, md: 10 }, bgcolor: "background.default", minHeight: "100vh" }}>
       <Container maxWidth="lg">
         {/* Header Section */}
-        <Box sx={{ textAlign: "center", mb: 8 }}>
+        <Box sx={{ textAlign: "center", mb: { xs: 5, md: 8 } }}>
           <Typography
             variant="overline"
             color="primary"
@@ -55,7 +55,7 @@ const InstructorsPage = () => {
           </Typography>
           <Typography
             variant="h2"
-            sx={{ fontWeight: 900, mb: 2, mt: 1 }}
+            sx={{ fontWeight: 900, mb: 2, mt: 1, fontSize: { xs: "2rem", md: "3.75rem" } }}
           >
             Meet Our Honorable Instructors
           </Typography>
@@ -192,7 +192,7 @@ const InstructorsPage = () => {
                       <Divider sx={{ mb: 3 }} />
 
                       <Stack
-                        direction="row"
+                        direction={{ xs: "column", sm: "row" }}
                         spacing={1}
                         justifyContent="center"
                       >
@@ -201,15 +201,17 @@ const InstructorsPage = () => {
                           size="small"
                           startIcon={<EmailIcon />}
                           href={`mailto:${instructor.email}`}
+                          fullWidth
                           sx={{ borderRadius: 2 }}
                         >
                           Contact
                         </Button>
-                        <Link href={`/courses?instructor=${instructor._id}`} passHref style={{ textDecoration: 'none' }}>
+                        <Link href={`/courses?instructor=${instructor._id}`} passHref style={{ textDecoration: 'none', width: '100%' }}>
                           <Button
                             variant="contained"
                             size="small"
                             startIcon={<SchoolIcon />}
+                            fullWidth
                             sx={{ borderRadius: 2 }}
                           >
                             Courses

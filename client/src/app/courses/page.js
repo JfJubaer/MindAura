@@ -7,7 +7,6 @@ import {
   Typography,
   Grid,
   Pagination,
-  Stack,
   Alert,
   Paper,
   TextField,
@@ -99,15 +98,13 @@ const CoursesPage = () => {
     return () => clearTimeout(delayDebounceFn);
   }, [searchTerm, category, minPrice, maxPrice, sortBy, instructorId]);
 
-  const handlePageChange = (event, value) => {
+  const handlePageChange = (_event, value) => {
     setPage(value);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  console.log(courses);
-
   return (
-    <Box sx={{ py: 8, bgcolor: "background.default", minHeight: "100vh" }}>
+    <Box sx={{ py: { xs: 8, md: 8 }, bgcolor: "background.default", minHeight: "100vh" }}>
       <Container maxWidth="lg">
         <Box sx={{ mb: 6, textAlign: "center" }}>
           <Typography
@@ -115,6 +112,7 @@ const CoursesPage = () => {
             sx={{
               fontWeight: 900,
               mb: 2,
+              fontSize: { xs: "2rem", md: "3.75rem" },
               background: "linear-gradient(45deg, #2D3E50 30%, #3F51B5 90%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
@@ -136,7 +134,7 @@ const CoursesPage = () => {
         <Paper
           elevation={0}
           sx={{
-            p: 3,
+            p: { xs: 2, sm: 3 },
             mb: 6,
             borderRadius: 4,
             border: "1px solid",
@@ -210,6 +208,7 @@ const CoursesPage = () => {
                   placeholder="Min"
                   type="number"
                   size="small"
+                  fullWidth
                   value={minPrice}
                   onChange={(e) => setMinPrice(e.target.value)}
                 />
@@ -218,6 +217,7 @@ const CoursesPage = () => {
                   placeholder="Max"
                   type="number"
                   size="small"
+                  fullWidth
                   value={maxPrice}
                   onChange={(e) => setMaxPrice(e.target.value)}
                 />
@@ -345,6 +345,10 @@ const CoursesPage = () => {
                 "& .MuiPaginationItem-root": {
                   fontWeight: 700,
                   borderRadius: 2,
+                },
+                "& ul": {
+                  flexWrap: "wrap",
+                  justifyContent: "center",
                 },
               }}
             />

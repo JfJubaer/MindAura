@@ -37,26 +37,29 @@ const FeaturedCourses = () => {
   }, []);
 
   return (
-    <Box sx={{ py: 10, bgcolor: "background.default" }}>
+    <Box sx={{ py: { xs: 8, md: 10 }, bgcolor: "background.default" }}>
       <Container maxWidth="lg">
         <Box
           sx={{
             display: "flex",
+            flexDirection: { xs: "column", md: "row" },
             justifyContent: "space-between",
-            alignItems: "flex-end",
-            mb: 6,
+            alignItems: { xs: "flex-start", md: "flex-end" },
+            gap: 2,
+            mb: { xs: 4, md: 6 },
           }}
         >
           <Box>
             <Typography
               variant="h2"
-              sx={{ fontWeight: 800, mb: 1 }}
+              sx={{ fontWeight: 800, mb: 1, fontSize: { xs: "2rem", md: "3rem" } }}
             >
               Featured Courses
             </Typography>
             <Typography
               variant="h6"
               color="text.secondary"
+              sx={{ fontSize: { xs: "1rem", md: "1.25rem" } }}
             >
               Hand-picked curriculum to start your journey.
             </Typography>
@@ -69,7 +72,7 @@ const FeaturedCourses = () => {
             <Button
               variant="text"
               size="large"
-              sx={{ fontWeight: 700 }}
+              sx={{ fontWeight: 700, px: { xs: 0, md: 2 } }}
             >
               View All Courses
             </Button>
@@ -100,7 +103,7 @@ const FeaturedCourses = () => {
         </Grid>
 
         {!loading && courses.length === 0 && (
-          <Box sx={{ textAlign: "center", py: 8 }}>
+          <Box sx={{ textAlign: "center", py: { xs: 6, md: 8 } }}>
             <Typography
               variant="h6"
               color="text.secondary"

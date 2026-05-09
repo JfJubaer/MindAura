@@ -74,7 +74,7 @@ const AboutPage = () => {
       <Box
         sx={{
           position: "relative",
-          height: "60vh",
+          minHeight: { xs: 420, md: 520 },
           bgcolor: "primary.main",
           display: "flex",
           alignItems: "center",
@@ -92,16 +92,16 @@ const AboutPage = () => {
             sx={{
               fontWeight: 900,
               mb: 2,
-              fontSize: { xs: "3rem", md: "4.5rem" },
+              fontSize: { xs: "2.5rem", sm: "3rem", md: "4.5rem" },
               textTransform: "uppercase",
-              letterSpacing: 2,
+              letterSpacing: { xs: 1, md: 2 },
             }}
           >
             Our Mission
           </Typography>
           <Typography
             variant="h5"
-            sx={{ fontWeight: 400, opacity: 0.9, lineHeight: 1.6 }}
+            sx={{ fontWeight: 400, opacity: 0.9, lineHeight: 1.6, fontSize: { xs: "1rem", md: "1.5rem" } }}
           >
             Empowering individuals through mindful learning and expert-led
             psychology education.
@@ -112,12 +112,12 @@ const AboutPage = () => {
       {/* Stats Section */}
       <Container
         maxWidth="lg"
-        sx={{ mt: -8, position: "relative", zIndex: 2 }}
+        sx={{ mt: { xs: -5, md: -8 }, position: "relative", zIndex: 2 }}
       >
         <Paper
           elevation={4}
           sx={{
-            p: 4,
+            p: { xs: 2.5, sm: 3, md: 4 },
             borderRadius: 4,
             bgcolor: "background.paper",
           }}
@@ -142,7 +142,7 @@ const AboutPage = () => {
                   </Box>
                   <Typography
                     variant="h4"
-                    sx={{ fontWeight: 800 }}
+                    sx={{ fontWeight: 800, fontSize: { xs: "1.5rem", md: "2.125rem" } }}
                   >
                     {stat.value}
                   </Typography>
@@ -163,11 +163,11 @@ const AboutPage = () => {
       {/* Our Story Section */}
       <Container
         maxWidth="lg"
-        sx={{ py: 12 }}
+        sx={{ py: { xs: 8, md: 12 } }}
       >
         <Grid
           container
-          spacing={8}
+          spacing={{ xs: 5, md: 8 }}
           alignItems="center"
         >
           <Grid size={{ xs: 12, md: 6 }}>
@@ -180,7 +180,7 @@ const AboutPage = () => {
             </Typography>
             <Typography
               variant="h3"
-              sx={{ fontWeight: 800, mt: 1, mb: 3 }}
+              sx={{ fontWeight: 800, mt: 1, mb: 3, fontSize: { xs: "2rem", md: "3rem" } }}
             >
               Transforming Lives Through Education
             </Typography>
@@ -200,27 +200,27 @@ const AboutPage = () => {
               paragraph
               sx={{ fontSize: "1.1rem", lineHeight: 1.8 }}
             >
-              Over the past few years, we've grown from a small group of
+              Over the past few years, we&apos;ve grown from a small group of
               passionate educators to a global platform, helping thousands of
               students navigate the complexities of the human mind and achieve
               their personal growth goals.
             </Typography>
             <Stack
-              direction="row"
+              direction={{ xs: "column", sm: "row" }}
               spacing={2}
               sx={{ mt: 4 }}
             >
               <Button
                 variant="contained"
                 size="large"
-                sx={{ borderRadius: 2, px: 4 }}
+                sx={{ borderRadius: 2, px: 4, width: { xs: "100%", sm: "auto" } }}
               >
                 Explore Courses
               </Button>
               <Button
                 variant="outlined"
                 size="large"
-                sx={{ borderRadius: 2, px: 4 }}
+                sx={{ borderRadius: 2, px: 4, width: { xs: "100%", sm: "auto" } }}
               >
                 Contact Us
               </Button>
@@ -233,14 +233,15 @@ const AboutPage = () => {
                 "&::after": {
                   content: '""',
                   position: "absolute",
-                  top: -20,
-                  right: -20,
+                  top: { xs: -10, md: -20 },
+                  right: { xs: -10, md: -20 },
                   width: "100%",
                   height: "100%",
                   border: "4px solid",
                   borderColor: "primary.main",
                   borderRadius: 4,
                   zIndex: -1,
+                  display: { xs: "none", sm: "block" },
                 },
               }}
             >
@@ -259,12 +260,12 @@ const AboutPage = () => {
       </Container>
 
       {/* Core Values Section */}
-      <Box sx={{ bgcolor: "background.default", py: 12 }}>
+      <Box sx={{ bgcolor: "background.default", py: { xs: 8, md: 12 } }}>
         <Container maxWidth="lg">
           <Typography
             variant="h3"
             textAlign="center"
-            sx={{ fontWeight: 800, mb: 8 }}
+            sx={{ fontWeight: 800, mb: { xs: 5, md: 8 }, fontSize: { xs: "2rem", md: "3rem" } }}
           >
             Our Core Values
           </Typography>
@@ -329,7 +330,7 @@ const AboutPage = () => {
       {/* Team Section */}
       <Container
         maxWidth="lg"
-        sx={{ py: 12 }}
+        sx={{ py: { xs: 8, md: 12 } }}
       >
         <Box
           textAlign="center"
@@ -337,7 +338,7 @@ const AboutPage = () => {
         >
           <Typography
             variant="h3"
-            sx={{ fontWeight: 800, mb: 2 }}
+            sx={{ fontWeight: 800, mb: 2, fontSize: { xs: "2rem", md: "3rem" } }}
           >
             Meet the Team
           </Typography>
@@ -366,8 +367,8 @@ const AboutPage = () => {
                   <Avatar
                     src={member.image}
                     sx={{
-                      width: 150,
-                      height: 150,
+                      width: { xs: 112, md: 150 },
+                      height: { xs: 112, md: 150 },
                       border: "4px solid",
                       borderColor: "primary.main",
                     }}
@@ -406,14 +407,14 @@ const AboutPage = () => {
         sx={{
           bgcolor: "primary.main",
           color: "white",
-          py: 10,
+          py: { xs: 8, md: 10 },
           textAlign: "center",
         }}
       >
         <Container maxWidth="md">
           <Typography
             variant="h3"
-            sx={{ fontWeight: 800, mb: 3 }}
+            sx={{ fontWeight: 800, mb: 3, fontSize: { xs: "2rem", md: "3rem" } }}
           >
             Ready to Start Your Journey?
           </Typography>
@@ -431,7 +432,8 @@ const AboutPage = () => {
               bgcolor: "white",
               color: "primary.main",
               fontWeight: 800,
-              px: 6,
+              px: { xs: 4, md: 6 },
+              width: { xs: "100%", sm: "auto" },
               "&:hover": { bgcolor: "action.hover" },
             }}
           >

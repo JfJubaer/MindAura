@@ -8,7 +8,6 @@ import {
   Grid2 as Grid,
   Alert,
   Button,
-  CircularProgress,
 } from "@mui/material";
 import Link from "next/link";
 import axiosInstance from "@/lib/axios/axiosInstance";
@@ -72,7 +71,7 @@ const WishlistPage = () => {
     return (
       <Box
         sx={{
-          py: 16,
+          py: { xs: 10, md: 16 },
           minHeight: "80vh",
           display: "flex",
           alignItems: "center",
@@ -80,7 +79,7 @@ const WishlistPage = () => {
           bgcolor: "background.default",
         }}
       >
-        <Box sx={{ textAlign: "center" }}>
+        <Box sx={{ textAlign: "center", px: 2 }}>
           <LockOutlinedIcon sx={{ fontSize: 64, color: "text.disabled", mb: 2 }} />
           <Typography variant="h5" sx={{ fontWeight: 700, mb: 1 }}>
             Please log in to view your wishlist
@@ -99,10 +98,10 @@ const WishlistPage = () => {
   }
 
   return (
-    <Box sx={{ py: 8, bgcolor: "background.default", minHeight: "100vh" }}>
+    <Box sx={{ py: { xs: 8, md: 8 }, bgcolor: "background.default", minHeight: "100vh" }}>
       <Container maxWidth="lg">
         <Box sx={{ mb: 6 }}>
-          <Typography variant="h3" sx={{ fontWeight: 800, mb: 1 }}>
+          <Typography variant="h3" sx={{ fontWeight: 800, mb: 1, fontSize: { xs: "2rem", md: "3rem" } }}>
             My Wishlist
           </Typography>
           <Typography variant="body1" color="text.secondary">
@@ -133,7 +132,7 @@ const WishlistPage = () => {
             <Grid size={{ xs: 12 }}>
               <Box
                 sx={{
-                  py: 12,
+                  py: { xs: 8, md: 12 },
                   textAlign: "center",
                   bgcolor: "background.paper",
                   borderRadius: 4,
@@ -158,7 +157,7 @@ const WishlistPage = () => {
                   <Button
                     variant="contained"
                     size="large"
-                    sx={{ borderRadius: 2, px: 4 }}
+                    sx={{ borderRadius: 2, px: { xs: 3, md: 4 } }}
                   >
                     Browse Courses
                   </Button>

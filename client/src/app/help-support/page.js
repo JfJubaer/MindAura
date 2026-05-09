@@ -7,7 +7,6 @@ import {
   Typography,
   Grid2 as Grid,
   Card,
-  CardContent,
   Stack,
   TextField,
   Button,
@@ -98,7 +97,7 @@ const faqs = [
     category: "Billing & Payments",
     question: "Can I get a refund for a course?",
     answer:
-      "Yes. We offer a 30-day money-back guarantee on all paid courses, no questions asked. Contact our support team with your order details and we will process your refund within 5–7 business days.",
+      "Yes. We offer a 30-day money-back guarantee on all paid courses, no questions asked. Contact our support team with your order details and we will process your refund within 5-7 business days.",
   },
   {
     category: "Technical Issues",
@@ -193,7 +192,7 @@ const HelpSupportPage = () => {
       <Box
         sx={{
           position: "relative",
-          py: { xs: 10, md: 16 },
+          py: { xs: 8, md: 16 },
           textAlign: "center",
           backgroundImage:
             "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%)",
@@ -202,20 +201,20 @@ const HelpSupportPage = () => {
           "&::before": {
             content: '""',
             position: "absolute",
-            top: -80,
-            right: -80,
-            width: 400,
-            height: 400,
+            top: { xs: -32, md: -80 },
+            right: { xs: -32, md: -80 },
+            width: { xs: 180, md: 400 },
+            height: { xs: 180, md: 400 },
             borderRadius: "50%",
             bgcolor: "rgba(255,255,255,0.05)",
           },
           "&::after": {
             content: '""',
             position: "absolute",
-            bottom: -100,
-            left: -60,
-            width: 300,
-            height: 300,
+            bottom: { xs: -48, md: -100 },
+            left: { xs: -24, md: -60 },
+            width: { xs: 140, md: 300 },
+            height: { xs: 140, md: 300 },
             borderRadius: "50%",
             bgcolor: "rgba(255,255,255,0.06)",
           },
@@ -239,7 +238,7 @@ const HelpSupportPage = () => {
             sx={{
               fontWeight: 900,
               mb: 3,
-              fontSize: { xs: "2.5rem", md: "3.5rem" },
+              fontSize: { xs: "2rem", sm: "2.5rem", md: "3.5rem" },
             }}
           >
             Help &amp; Support Centre
@@ -258,17 +257,19 @@ const HelpSupportPage = () => {
             elevation={3}
             sx={{
               display: "flex",
-              alignItems: "center",
+              flexDirection: { xs: "column", sm: "row" },
+              alignItems: { xs: "stretch", sm: "center" },
               borderRadius: 4,
               overflow: "hidden",
               maxWidth: 600,
               mx: "auto",
               p: 0.5,
+              gap: { xs: 1, sm: 0 },
             }}
           >
             <TextField
               fullWidth
-              placeholder="Search for answers…"
+              placeholder="Search for answers..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               variant="standard"
@@ -291,6 +292,7 @@ const HelpSupportPage = () => {
                 borderRadius: 3,
                 fontWeight: 700,
                 flexShrink: 0,
+                width: { xs: "calc(100% - 8px)", sm: "auto" },
               }}
               onClick={() => {}}
             >
@@ -301,17 +303,17 @@ const HelpSupportPage = () => {
       </Box>
 
       {/* ── Help Categories ──────────────────────────────────────── */}
-      <Container maxWidth="lg" sx={{ py: 10 }}>
+      <Container maxWidth="lg" sx={{ py: { xs: 8, md: 10 } }}>
         <Typography
           variant="h4"
           textAlign="center"
-          sx={{ fontWeight: 800, mb: 6 }}
+          sx={{ fontWeight: 800, mb: 6, fontSize: { xs: "1.8rem", md: "2.125rem" } }}
         >
           Browse by Topic
         </Typography>
         <Grid container spacing={3} alignItems="stretch">
           {categories.map((cat, i) => (
-            <Grid size={{ xs: 6, sm: 4, md: 2 }} key={i} sx={{ display: 'flex' }}>
+            <Grid size={{ xs: 12, sm: 6, md: 4, lg: 2 }} key={i} sx={{ display: 'flex' }}>
               <Card
                 onClick={() =>
                   setActiveCategory(
@@ -326,7 +328,7 @@ const HelpSupportPage = () => {
                   alignItems: 'center',
                   justifyContent: 'center',
                   textAlign: "center",
-                  p: 3,
+                  p: { xs: 2.5, md: 3 },
                   borderRadius: 4,
                   border: "2px solid",
                   borderColor:
@@ -376,7 +378,7 @@ const HelpSupportPage = () => {
       </Container>
 
       {/* ── FAQ Accordion ────────────────────────────────────────── */}
-      <Box sx={{ bgcolor: "background.default", py: 10 }}>
+      <Box sx={{ bgcolor: "background.default", py: { xs: 8, md: 10 } }}>
         <Container maxWidth="md">
           {/* Category Filter Chips */}
           <Stack
@@ -402,7 +404,7 @@ const HelpSupportPage = () => {
           <Typography
             variant="h4"
             textAlign="center"
-            sx={{ fontWeight: 800, mb: 2 }}
+            sx={{ fontWeight: 800, mb: 2, fontSize: { xs: "1.8rem", md: "2.125rem" } }}
           >
             Frequently Asked Questions
           </Typography>
@@ -417,7 +419,7 @@ const HelpSupportPage = () => {
           </Typography>
 
           {filteredFaqs.length === 0 ? (
-            <Paper sx={{ p: 6, textAlign: "center", borderRadius: 4 }}>
+            <Paper sx={{ p: { xs: 4, md: 6 }, textAlign: "center", borderRadius: 4 }}>
               <SearchIcon sx={{ fontSize: 48, color: "text.disabled", mb: 2 }} />
               <Typography variant="h6" sx={{ fontWeight: 700 }}>
                 No results found
@@ -457,7 +459,7 @@ const HelpSupportPage = () => {
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     sx={{
-                      px: 3,
+                      px: { xs: 2, sm: 3 },
                       py: 0.5,
                       bgcolor:
                         expandedFaq === i ? "primary.50" : "background.paper",
@@ -481,7 +483,7 @@ const HelpSupportPage = () => {
                       </Typography>
                     </Box>
                   </AccordionSummary>
-                  <AccordionDetails sx={{ px: 3, pb: 3 }}>
+                  <AccordionDetails sx={{ px: { xs: 2, sm: 3 }, pb: 3 }}>
                     <Divider sx={{ mb: 2 }} />
                     <Typography
                       variant="body1"
@@ -499,11 +501,11 @@ const HelpSupportPage = () => {
       </Box>
 
       {/* ── Contact Options ──────────────────────────────────────── */}
-      <Container maxWidth="lg" sx={{ py: 10 }}>
+      <Container maxWidth="lg" sx={{ py: { xs: 8, md: 10 } }}>
         <Typography
           variant="h4"
           textAlign="center"
-          sx={{ fontWeight: 800, mb: 2 }}
+          sx={{ fontWeight: 800, mb: 2, fontSize: { xs: "1.8rem", md: "2.125rem" } }}
         >
           Still Need Help?
         </Typography>
@@ -513,17 +515,17 @@ const HelpSupportPage = () => {
           textAlign="center"
           sx={{ mb: 8 }}
         >
-          Our support team is available Monday – Friday, 9am – 6pm (GMT+6).
+          Our support team is available Monday - Friday, 9am - 6pm (GMT+6).
         </Typography>
 
-        <Grid container spacing={4} justifyContent="center" sx={{ mb: 10 }}>
+        <Grid container spacing={4} justifyContent="center" sx={{ mb: { xs: 8, md: 10 } }}>
           {contactOptions.map((opt, i) => (
             <Grid size={{ xs: 12, sm: 6, md: 4 }} key={i}>
               <Card
                 elevation={0}
                 sx={{
                   textAlign: "center",
-                  p: 4,
+                  p: { xs: 3, md: 4 },
                   borderRadius: 4,
                   border: "1px solid",
                   borderColor: "divider",
@@ -561,7 +563,7 @@ const HelpSupportPage = () => {
                 <Button
                   variant="outlined"
                   href={opt.href}
-                  sx={{ borderRadius: 2, fontWeight: 700 }}
+                  sx={{ borderRadius: 2, fontWeight: 700, width: { xs: "100%", sm: "auto" } }}
                 >
                   {opt.action}
                 </Button>
@@ -574,7 +576,7 @@ const HelpSupportPage = () => {
         <Paper
           elevation={0}
           sx={{
-            p: { xs: 4, md: 6 },
+            p: { xs: 3, sm: 4, md: 6 },
             borderRadius: 5,
             border: "1px solid",
             borderColor: "divider",
@@ -672,6 +674,7 @@ const HelpSupportPage = () => {
                       borderRadius: 2,
                       fontWeight: 800,
                       fontSize: "1rem",
+                      width: { xs: "100%", sm: "auto" },
                     }}
                   >
                     Send Ticket
@@ -689,12 +692,12 @@ const HelpSupportPage = () => {
           backgroundImage:
             "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)",
           color: "white",
-          py: 10,
+          py: { xs: 8, md: 10 },
           textAlign: "center",
         }}
       >
         <Container maxWidth="sm">
-          <Typography variant="h4" sx={{ fontWeight: 900, mb: 2 }}>
+          <Typography variant="h4" sx={{ fontWeight: 900, mb: 2, fontSize: { xs: "1.8rem", md: "2.125rem" } }}>
             Ready to Keep Learning?
           </Typography>
           <Typography variant="body1" sx={{ opacity: 0.9, mb: 4 }}>
@@ -714,6 +717,7 @@ const HelpSupportPage = () => {
                 color: "primary.main",
                 fontWeight: 800,
                 px: 4,
+                width: { xs: "100%", sm: "auto" },
                 "&:hover": { bgcolor: "action.hover" },
                 borderRadius: 2,
               }}
@@ -729,6 +733,7 @@ const HelpSupportPage = () => {
                 color: "white",
                 fontWeight: 700,
                 px: 4,
+                width: { xs: "100%", sm: "auto" },
                 borderRadius: 2,
                 "&:hover": {
                   borderColor: "white",

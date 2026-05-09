@@ -57,7 +57,7 @@ const AdminPanel = () => {
     }
   }, [tabValue, fetchUnapprovedCourses]);
 
-  const handleTabChange = (event, newValue) => {
+  const handleTabChange = (_event, newValue) => {
     setTabValue(newValue);
     setPage(1); // Reset to first page when changing tabs
   };
@@ -69,16 +69,16 @@ const AdminPanel = () => {
         // Remove from list or refresh
         setCourses((prev) => prev.filter((c) => c._id !== courseId));
       }
-    } catch (err) {
+    } catch {
       alert("Failed to approve course");
     }
   };
 
   return (
     <ProtectedRoute allowedRoles={["admin"]}>
-      <Box sx={{ py: 6, bgcolor: "background.default", minHeight: "100vh" }}>
+      <Box sx={{ py: { xs: 6, md: 6 }, bgcolor: "background.default", minHeight: "100vh" }}>
         <Container maxWidth="lg">
-          <Typography variant="h3" sx={{ fontWeight: 800, mb: 4 }}>
+          <Typography variant="h3" sx={{ fontWeight: 800, mb: 4, fontSize: { xs: "2rem", md: "3rem" } }}>
             Admin Panel
           </Typography>
 
@@ -88,7 +88,9 @@ const AdminPanel = () => {
               onChange={handleTabChange}
               indicatorColor="primary"
               textColor="primary"
-              variant="fullWidth"
+              variant="scrollable"
+              scrollButtons="auto"
+              allowScrollButtonsMobile
               sx={{ borderBottom: 1, borderColor: "divider" }}
             >
               <Tab label="Teacher Requests" sx={{ py: 2, fontWeight: 700 }} />
@@ -111,7 +113,7 @@ const AdminPanel = () => {
             <Stack spacing={3}>
               {error && <Alert severity="error">{error}</Alert>}
 
-              <TableContainer component={Paper} sx={{ borderRadius: 4, overflow: "hidden", border: "1px solid", borderColor: "divider" }} elevation={0}>
+              <TableContainer component={Paper} sx={{ borderRadius: 4, overflowX: "auto", border: "1px solid", borderColor: "divider" }} elevation={0}>
                 <Table>
                   <TableHead sx={{ bgcolor: "action.hover" }}>
                     <TableRow>
@@ -182,7 +184,7 @@ const AdminPanel = () => {
                   <Pagination
                     count={totalPages}
                     page={page}
-                    onChange={(e, v) => setPage(v)}
+                    onChange={(_event, v) => setPage(v)}
                     color="primary"
                     shape="rounded"
                   />
